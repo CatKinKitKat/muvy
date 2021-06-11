@@ -1,18 +1,17 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { Card } from 'react-bootstrap'
 
-const Box = () => {
+const Box = (props) => {
   return (
-    <div className="col-md">
-      <a href="#" className="card bg-dark text-light" style={{ display: 'block', textDecoration: 'none' }}>
-        <div className="card-body text-center">
-          <div className="p-5" />
-          <div className="p-5" />
-          <p className="card-text pt-5"> Stonks Market </p>
-          <p className="card-text"> (2021) </p>
-        </div>
-      </a>
-    </div>
+    <Card>
+      <h1>{props.text}</h1>
+    </Card>
   )
+}
+
+Box.propTypes = {
+  text: PropTypes.string
 }
 
 export default Box

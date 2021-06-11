@@ -1,17 +1,18 @@
 import React from 'react'
+import { Container, InputGroup, FormControl, Button } from 'react-bootstrap'
 
 const SearchBar = () => {
+  function search () {
+
+  }
+
   return (
-    <>
-      <section className="p-lg-5 p-md-2 p-sm-1">
-        <div className="container">
-            <div className="input-group news-input">
-              <input type="text" className="form-control form-control-sm" placeholder="Find movies, series and more" />
-              <button className="btn btn-primary btn-sm" type="button">Search</button>
-            </div>
-        </div>
-      </section>
-    </>
+    <Container className="pt-5">
+      <InputGroup>
+        <FormControl placeholder="Find movies, series and more" />
+        <Button onClick={search}>Search</Button>
+      </InputGroup>
+    </Container>
   )
 }
 
