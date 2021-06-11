@@ -1,18 +1,30 @@
 import React from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 import Box from './boxes/Box'
 
-const BoxRow = () => {
+const BoxRow = (props) => {
+
+  const list = props.list.map((item, index) => {
+    return (
+      <Col className="d-flex align-items-stretch" key={index}>
+        <Box title={item.title} year={item.year} imgUrl={item.poster}/>
+      </Col>
+    )
+  })
+
   return (
-    <>
-      <section className="p-5">
-        <div className="container">
-          <div className="row text-center g-4">
-            <Box text="Test" />
-          </div>
-        </div>
-      </section>
-    </>
+    <Container className="pt-5">
+      <Row>
+        {list}
+      </Row>
+    </Container>
   )
 }
+
+BoxRow.propTypes = {
+  list: PropTypes.array
+}
+
 
 export default BoxRow

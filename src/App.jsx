@@ -1,5 +1,5 @@
 import React from 'react'
-import {Home} from './pages/Home'
+import Home from './pages/Home'
 import Movies from './pages/Movies'
 import Series from './pages/Series'
 import People from './pages/People'
