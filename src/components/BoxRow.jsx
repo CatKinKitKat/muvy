@@ -7,12 +7,7 @@ const BoxRow = () => {
       <section className="p-5">
         <div className="container">
           <div className="row text-center g-4">
-            <Box></Box>
-            <Box></Box>
-            <Box></Box>
-            <Box></Box>
-            <Box></Box>
-            <Box></Box>
+            <Box text="Test" />
           </div>
         </div>
       </section>

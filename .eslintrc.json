@@ -4,11 +4,9 @@
         "commonjs": true,
         "es2021": true
     },
-    "extends": [
-        "plugin:react/recommended",
-        "standard"
-    ],
+    "extends": "plugin:react/recommended",
     "parserOptions": {
+        "sourceType": "module",
         "ecmaFeatures": {
             "jsx": true
         },
