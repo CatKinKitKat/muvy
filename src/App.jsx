@@ -2,6 +2,7 @@ import React from 'react'
 import Navigation from './components/Navigation'
 import SearchBar from './components/SearchBar'
 import BoxRow from './components/BoxRow'
+import TrailerSlider from './components/TrailerSlider'
 
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
       <Navigation />
       <SearchBar />
       <BoxRow />
+      <TrailerSlider/>
     </>
   )
 }
