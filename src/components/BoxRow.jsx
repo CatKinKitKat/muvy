@@ -4,11 +4,10 @@ import PropTypes from 'prop-types'
 import Box from './boxes/Box'
 
 const BoxRow = (props) => {
-
   const list = props.list.map((item, index) => {
     return (
       <Col className="d-flex align-items-stretch" key={index}>
-        <Box title={item.title} year={item.year} imgUrl={item.poster}/>
+        <Box title={item.title} year={item.year} imgUrl={item.poster} id={item.id}/>
       </Col>
     )
   })

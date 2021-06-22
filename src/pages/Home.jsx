@@ -1,16 +1,15 @@
-
 import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import BoxRow from '../components/BoxRow'
 import Hello from '../components/Hello'
-import { fetchTopRatedMovies } from '../services/Caller'
+import { fetchMovies } from '../services/Caller'
 
 const Home = () => {
   const [nowPlaying, setNowPlaying] = useState([])
 
   useEffect(() => {
     const fetchAPI = async () => {
-      setNowPlaying(await fetchTopRatedMovies())
+      setNowPlaying(await fetchMovies())
     }
     fetchAPI()
   }, [])

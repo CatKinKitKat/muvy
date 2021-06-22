@@ -79,8 +79,15 @@ export const fetchMovieDetail = () => {
 
 }
 
-export const fetchMovieVideos = () => {
-
+export const fetchMovieVideos = async (id) => {
+  try {
+    const { data } = await axios.get(`${movieUrl}/${id}/videos`, {
+        params: {
+            api_key: apiKey
+        }
+    });
+    return data['results'][0]
+} catch (error) { }
 }
 
 export const fetchCasts = () => {
@@ -88,5 +95,28 @@ export const fetchCasts = () => {
 }
 
 export const fetchSimilarMovie = () => {
+
+}
+
+export const fetchTrailer = async (id) => {
+
+  try {
+    const { data } = await axios.get(`${movieUrl}/${id}/videos`, {
+        params: {
+            api_key: apiKey
+        }
+    });
+
+    const modifiedData = data['results'].map((m) => ({
+      type: m['type'],
+      key: m['key']
+    }))
+
+    for (var video of modifiedData) {
+      if (video.type == "Trailer") {
+        return (video.key).toString()
+      }
+    }
+} catch (error) { }
 
 }
