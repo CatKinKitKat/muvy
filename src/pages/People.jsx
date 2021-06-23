@@ -19,7 +19,7 @@ const People = () => {
                     className="img-fluid rounded-circle mx-auto d-block"
                     src={p.profileImg}
                     alt={p.name}
-                ></img>
+                />
                 <p className="font-weight-bold text-center">{p.name}</p>
                 <p
                     className="font-weight-light text-center"
@@ -36,7 +36,7 @@ const People = () => {
         <div className="row mt-3">
             <div className="col">
                 <p className="font-weight-bold" style={{ color: "#5a606b" }}>
-                    TRENDING PERSONS ON THIS WEEK
+                    TRENDING PEOPLE
                 </p>
             </div>
         </div>
