@@ -2,8 +2,15 @@ import React from 'react'
 import { Jumbotron, Button } from 'react-bootstrap'
 
 const Hello = () => {
+
+  const randy = () => {
+    return Math.floor(Math.random() * (999999 - 1) + 1);
+  }
+
+  const link = "/movie/" + randy();
+
   return (
-    <Jumbotron className="pt-5">
+    <Jumbotron className="pt-3">
       <h1>Welcome to muvy</h1>
       <p>
         This is a simple website with a simple purpose: to present you with the tools to
@@ -11,7 +18,7 @@ const Hello = () => {
         <br/>
         Click on the button bellow to learn about a random movie.
       </p>
-      <Button variant="primary">Give me Movie!</Button>
+      <Button variant="primary" href={link}>Give me Movie!</Button>
     </Jumbotron>
   )
 }

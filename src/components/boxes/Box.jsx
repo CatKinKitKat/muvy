@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 import PropTypes from 'prop-types'
 import { Button, Card } from 'react-bootstrap'
 import Modal from '../../components/VideoModal'
@@ -8,6 +8,7 @@ const Box = (props) => {
 
   const [key, setVideo] = useState([]);
   const name = props.title
+  const link = "/movie/" + props.id.toString()
 
   useEffect(() => {
     const fetchAPI = async () => {
@@ -20,10 +21,10 @@ const Box = (props) => {
     <Card >
       <Card.Img variant="top" src={props.imgUrl} />
       <Card.Body className="text-center d-flex flex-column">
-        <Button variant="outline" className="fs-5">
+        <Button variant="outline" className="fs-5 m-auto p-1" href={link}>
           {name.substring(0, 21)} <p className="fs-6 text-muted">
             ({props.year})
-            </p>
+          </p>
         </Button>
         <Modal link={key} />
       </Card.Body>

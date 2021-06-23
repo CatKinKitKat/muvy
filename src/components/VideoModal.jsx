@@ -12,9 +12,9 @@ const VideoModal = (props) => {
   return (
     <React.Fragment>
       <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId={props.link} onClose={() => setOpen(false)} />
-      <Button variant="primary" onClick={
+      <Button variant="danger" onClick={
         () => setOpen(true)
-      } className="mt-auto">Trailer</Button>
+      } className="mt-auto p-2">Trailer</Button>
     </React.Fragment>
   )
 }

@@ -80,13 +80,19 @@ export const fetchMovieDetail = () => {
 }
 
 export const fetchMovieVideos = async (id) => {
+  
   try {
     const { data } = await axios.get(`${movieUrl}/${id}/videos`, {
         params: {
             api_key: apiKey
         }
     });
-    return data['results'][0]
+    const modifiedData = data['results'].map((m) => ({
+      type: m['type'],
+      key: m['key']
+    }))
+
+    return modifiedData
 } catch (error) { }
 }
 
