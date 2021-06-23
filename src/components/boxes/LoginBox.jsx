@@ -2,13 +2,19 @@ import React from 'react'
 import { Container, Card, Form, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 const LoginBox = () => {
+
+  const FormHandler = (event) => {
+    alert("test")
+    event.preventDefault();
+  }
+
   return (
     <Container className="mt-5 text-center">
       <Card className="w-auto text-start p-5">
-        <Form>
-          <Form.Group controlId="formBasicEmail" className="pb-5">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
+        <Form onSubmit={FormHandler}>
+          <Form.Group controlId="formBasicUsername" className="pb-5">
+            <Form.Label>Username</Form.Label>
+            <Form.Control type="username" placeholder="Enter username" />
           </Form.Group>
           <Form.Group controlId="formBasicPassword" className="pb-1">
             <Form.Label>Password</Form.Label>

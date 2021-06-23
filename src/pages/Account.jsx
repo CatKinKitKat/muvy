@@ -1,12 +1,20 @@
 import React from 'react'
-import LoginBox from '../components/boxes/LoginBox'
+import { Redirect } from 'react-router-dom'
+import AccountBox from '../components/boxes/AccountBox'
+import { checkLogin } from '../services/Caller'
 
 const Account = () => {
+
+  if (checkLogin()) {
+    return (
+      <Redirect to='/login'></Redirect>
+    )
+  }
+
   return (
-    <>
-      <LoginBox></LoginBox>
-    </>
+    <AccountBox></AccountBox>
   )
+
 }
 
 export default Account

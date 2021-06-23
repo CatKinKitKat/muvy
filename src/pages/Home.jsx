@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
-import BoxRow from '../components/BoxRow'
+import HomeBoxRow from '../components/HomeBoxRow'
 import Hello from '../components/Hello'
 import { fetchMovies } from '../services/Caller'
 
@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <Container>
       <Hello />
-      <BoxRow list={ nowPlaying.slice(0, 6) } />
+      <HomeBoxRow list={ nowPlaying.slice(0, 10) } />
     </Container>
   )
 }
