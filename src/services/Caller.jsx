@@ -10,11 +10,11 @@ const url = 'https://api.themoviedb.org/3'
 const requestTokenUrl = `${url}/authentication/token/new`
 const loginUrl = `${url}/authentication/token/validate_with_login`
 const nowPlayingUrl = `${url}/movie/now_playing`
-const topRatedUrl = `${url}/movie/top_rated`
 const movieUrl = `${url}/movie`
-const genreUrl = `${url}/genre/movie/list`
-const moviesUrl = `${url}/discover/movie`
-const personUrl = `${url}/trending/person/week`
+const moviesGenresUrl = `${url}/genre/movie/list`
+const serieUrl = `${url}/tv`
+const serieGenresUrl = `${url}/genre/tv/list`
+const trendingPeopleUrl = `${url}/trending/person/week`
 
 export const checkLogin = async () => {
 
@@ -73,13 +73,20 @@ export const login = async (username, password) => {
   }
 }
 
-export const fetchMovies = async () => {
+export const fetchMovies = async (type, page) => {
+
+  const urlBuilder = movieUrl + "/" + type
+
+  if (page == "") {
+    page = 1
+  }
+
   try {
-    const { data } = await axios.get(nowPlayingUrl, {
+    const { data } = await axios.get(urlBuilder, {
       params: {
         api_key: apiKey,
         language: 'en_GB',
-        page: 1
+        page: page
       }
     })
 
@@ -88,7 +95,7 @@ export const fetchMovies = async () => {
       id: m['id'],
       year: m['release_date'].substring(0, 4),
       backPoster: posterUrl + m['backdrop_path'],
-      popularity: m['popularith'],
+      popularity: m['popularity'],
       title: m['title'],
       poster: posterUrl + m['poster_path'],
       overview: m['overview'],
@@ -96,7 +103,29 @@ export const fetchMovies = async () => {
     }))
 
     return modifiedData;
-  } catch (error) { }
+  } catch (error) {
+    const { data } = await axios.get(urlBuilder, {
+      params: {
+        api_key: apiKey,
+        language: 'en_GB',
+        page: page
+      }
+    })
+
+    const posterUrl = 'https://image.tmdb.org/t/p/w500/';
+    const modifiedData = data['results'].map((m) => ({
+      id: m['id'],
+      year: "2021",
+      backPoster: posterUrl + m['backdrop_path'],
+      popularity: m['popularity'],
+      title: m['title'],
+      poster: posterUrl + m['poster_path'],
+      overview: m['overview'],
+      rating: m['vote_average'],
+    }))
+
+    return modifiedData;
+  }
 }
 
 export const fetchGenre = () => {
@@ -111,7 +140,7 @@ export const fetchMovieByGenre = async () => {
 export const fetchPeople = async () => {
 
   try {
-    const { data } = await axios.get(personUrl, {
+    const { data } = await axios.get(trendingPeopleUrl, {
       params: {
         api_key: apiKey
       }
@@ -123,36 +152,47 @@ export const fetchPeople = async () => {
       profileImg: 'https://image.tmdb.org/t/p/w500' + p['profile_path'],
       known: p['known_for_department']
     }))
-    
+
     return modifiedData;
-  } catch (error) { }
+  } catch (error) {
+    return []
+  }
 }
 
-export const fetchTopRatedMovies = async () => {
+export const fetchSeries = async (type, page) => {
+
+  const urlBuilder = serieUrl + "/" + type
+
+  if (page == "") {
+    page = 1
+  }
 
   try {
-    const { data } = await axios.get(topRatedUrl, {
+    const { data } = await axios.get(urlBuilder, {
       params: {
         api_key: apiKey,
-        language: 'en_US',
-        page: 1
+        language: 'en_GB',
+        page: page
       }
     })
 
     const posterUrl = 'https://image.tmdb.org/t/p/w500/';
     const modifiedData = data['results'].map((m) => ({
       id: m['id'],
-      year: m['release_date'].substring(0, 4),
+      year: m['first_air_date'].substring(0, 4),
       backPoster: posterUrl + m['backdrop_path'],
-      popularity: m['popularith'],
-      title: m['title'],
+      popularity: m['popularity'],
+      title: m['name'],
       poster: posterUrl + m['poster_path'],
       overview: m['overview'],
       rating: m['vote_average'],
     }))
 
     return modifiedData;
-  } catch (error) { }
+  } catch (error) {
+    alert(error)
+    return []
+  }
 }
 
 export const fetchMovieDetail = () => {
@@ -173,7 +213,9 @@ export const fetchMovieVideos = async (id) => {
     }))
 
     return modifiedData
-  } catch (error) { }
+  } catch (error) {
+    return []
+  }
 }
 
 export const fetchCasts = () => {
@@ -203,7 +245,9 @@ export const fetchTrailer = async (id) => {
         return (video.key).toString()
       }
     }
-  } catch (error) { }
+  } catch (error) {
+    return []
+  }
 
 }
 

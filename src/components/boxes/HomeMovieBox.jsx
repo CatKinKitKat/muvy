@@ -7,8 +7,13 @@ import { fetchTrailer } from '../../services/Caller'
 const HomeMovieBox = (props) => {
 
   const [key, setVideo] = useState([]);
-  const name = props.title
   const link = "/movie/" + props.id.toString()
+  const nameHandle = (title) => {
+    if (title.length >= 25) {
+      return title.substring(0,25) + "..."
+    }
+    return title
+  }
 
   useEffect(() => {
     const fetchAPI = async () => {
@@ -21,8 +26,8 @@ const HomeMovieBox = (props) => {
     <Card style={{ width: '12.5rem' }}>
       <Card.Img variant="top" src={props.imgUrl} style={{aspectRatio: "10/16"}}/>
       <Card.Body className="text-center d-flex flex-column">
-        <Button variant="outline" className="fs-4 m-auto p-1" href={link}>
-          {name.substring(0, 21)} <p className="fs-6 text-muted">
+        <Button variant="outline" className="fs-5 m-auto p-1" href={link}>
+          {nameHandle(props.title)} <p className="fs-6 text-muted">
             ({props.year})
           </p>
         </Button>

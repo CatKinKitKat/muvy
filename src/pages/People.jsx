@@ -35,8 +35,6 @@ const People = () => {
         {trendingPeople}
       </Row>
     </Container>
-
-
   )
 }
 
