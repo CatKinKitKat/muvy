@@ -1,14 +1,12 @@
 import axios from 'axios'
 
-var session = ""
-
 const apiKey = 'a376a8713895b520ccb34e514f0fbe51'
-var request_token = "484babcdf9f0e0cc23b65ad722413b3200a087a7"
 
 const url = 'https://api.themoviedb.org/3'
 
 const requestTokenUrl = `${url}/authentication/token/new`
 const loginUrl = `${url}/authentication/token/validate_with_login`
+const sessionUrl = `${url}//authentication/session/new`
 const nowPlayingUrl = `${url}/movie/now_playing`
 const movieUrl = `${url}/movie`
 const moviesGenresUrl = `${url}/genre/movie/list`
@@ -16,62 +14,104 @@ const serieUrl = `${url}/tv`
 const serieGenresUrl = `${url}/genre/tv/list`
 const trendingPeopleUrl = `${url}/trending/person/week`
 
-export const checkLogin = async () => {
+var session_id = ""
+var request_token = ""
+var token_validated = false
 
-  if (session === "") {
-    return false
+export const checkLogin = () => {
+
+  if (session_id === "") {
+
+    return false //logged in
   } else {
-    return true
+
+    return true //logged out
   }
 
 }
 
-export const getToken = async () => {
-
-  if (request_token != "") {
-    return request_token
-  }
+const getToken = async () => {
 
   try {
+
     const { data } = await axios.get(requestTokenUrl, {
       params: {
         api_key: apiKey
       }
     })
-    const modifiedData = data['results'].map((m) => ({
-      request_token: m['request_token'],
-    }))
 
-    request_token = modifiedData.request_token
-    alert("DEV, Request Token Expired" + request_token)
-    return request_token
+    request_token = data['request_token']
+    token_validated = false
   } catch (error) {
+
+    console.log("Error getting primitive token")
+    console.log(error)
+
     request_token = ""
-    return getToken()
+    token_validated = false
   }
+
 }
 
-export const login = async (username, password) => {
+const validateToken = async (username, password) => {
+
+  await getToken()
 
   try {
+
+    // change to POST
     const { data } = await axios.get(loginUrl, {
       params: {
         api_key: apiKey,
         username: username,
         password: password,
-        request_token: getToken()
+        request_token: request_token
       }
     })
-    const modifiedData = data['results'].map((m) => ({
-      request_token: m['request_token'],
-    }))
 
-    return modifiedData;
+    token_validated = true
+
   } catch (error) {
+
+    console.log("Error getting validation for token")
+    console.log(error)
+
     request_token = ""
-    return "error"
+    token_validated = false
   }
 }
+
+export const login = async (username, password) => {
+
+  await validateToken(username, password)
+
+  try {
+
+    // change to POST
+    const { data } = await axios.get(sessionUrl, {
+      params: {
+        api_key: apiKey,
+        request_token: request_token
+      }
+    })
+
+    session_id = data['session_id']
+
+    console.log("session. " + session_id + "\ntoken used. " + request_token + " validated? " + token_validated)
+
+    return true
+  } catch (error) {
+
+    console.log("Error logging in")
+    console.log(error)
+
+    session_id = ""
+    request_token = ""
+    token_validated = false
+    return false
+  }
+}
+
 
 export const fetchMovies = async (type, page) => {
 
