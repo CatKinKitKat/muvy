@@ -8,14 +8,14 @@ const requestTokenUrl = `${url}/authentication/token/new` // GET
 const loginUrl = `${url}/authentication/token/validate_with_login` // POST
 const sessionUrl = `${url}/authentication/session/new`// POST
 const deleteSessionUrl = `${url}/authentication/session`// DELETE
-const nowPlayingUrl = `${url}/movie/now_playing` // GET
+const peopleUrl = `${url}/person` // GET
 const movieUrl = `${url}/movie` // GET
-const moviesGenresUrl = `${url}/genre/movie/list` // GET
 const serieUrl = `${url}/tv` // GET
-const serieGenresUrl = `${url}/genre/tv/list` // GET
+const trendingPeopleUrl = `${url}/trending/person/week` // GET
 const trendingMoviesUrl = `${url}/trending/movie/week` // GET
 const trendingSeriesUrl = `${url}/trending/tv/week` // GET
-const trendingPeopleUrl = `${url}/trending/person/week` // GET
+const moviesGenresUrl = `${url}/genre/movie/list` // GET
+const serieGenresUrl = `${url}/genre/tv/list` // GET
 
 const getToken = async () => {
 
@@ -158,13 +158,26 @@ export const fetchMovieByGenre = async () => {
 }
 
 
-export const fetchPeople = async () => {
+export const fetchPeople = async (type, page) => {
 
   var data = []
+  var urlBuilder = ""
 
-  await axios.get(trendingPeopleUrl, {
+  if (type === "trending") {
+    urlBuilder = trendingPeopleUrl
+  } else {
+    urlBuilder = peopleUrl + "/" + type
+  }
+  
+  if (page == "") {
+    page = 1
+  }
+
+  await axios.get(urlBuilder, {
     params: {
-      api_key: apiKey
+      api_key: apiKey,
+      language: 'en_GB',
+      page: page
     }
   }).then(response => {
     data = response.data
@@ -193,7 +206,7 @@ export const fetchSeries = async (type, page) => {
   } else {
     urlBuilder = serieUrl + "/" + type
   }
-
+  
   if (page == "") {
     page = 1
   }

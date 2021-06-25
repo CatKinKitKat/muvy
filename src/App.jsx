@@ -23,7 +23,7 @@ function App() {
           <Route path='/movies/:sort_type' component={Movies} />
           <Route path='/series/:sort_type' component={Series} />
           <Route path='/person' component={Person} />
-          <Route path='/people' component={People} />
+          <Route path='/people/:sort_type' component={People} />
           <Route path='/account' component={Account} />
           <Route path='/login' component={Login} />
           <Route path='/search' component={Search} />

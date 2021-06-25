@@ -12,7 +12,7 @@ const Navigation = () => {
           <Nav className="ms-auto">
             <Nav.Link href="/movies/popular" className="nav-link">Movies</Nav.Link>
             <Nav.Link href="/series/popular" className="nav-link">Series</Nav.Link>
-            <Nav.Link href="/people" className="nav-link">People</Nav.Link>
+            <Nav.Link href="/people/popular" className="nav-link">People</Nav.Link>
             <Nav.Link href="/account" className="nav-link">Account</Nav.Link>
             <Nav.Link href="/search" className="nav-link"><Search className="fs-4" /></Nav.Link>
           </Nav>
