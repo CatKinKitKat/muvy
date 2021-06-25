@@ -14,22 +14,6 @@ const serieUrl = `${url}/tv`
 const serieGenresUrl = `${url}/genre/tv/list`
 const trendingPeopleUrl = `${url}/trending/person/week`
 
-var session_id = ""
-var request_token = ""
-var token_validated = false
-
-export const checkLogin = () => {
-
-  if (session_id === "") {
-
-    return false //logged in
-  } else {
-
-    return true //logged out
-  }
-
-}
-
 const getToken = async () => {
 
   try {
@@ -40,15 +24,15 @@ const getToken = async () => {
       }
     })
 
-    request_token = data['request_token']
-    token_validated = false
+    sessionStorage.setItem("request_token", data['request_token'])
+    sessionStorage.setItem("token_validated", false)
   } catch (error) {
 
     console.log("Error getting primitive token")
     console.log(error)
 
-    request_token = ""
-    token_validated = false
+    sessionStorage.removeItem("request_token")
+    sessionStorage.removeItem("token_validated")
   }
 
 }
@@ -59,25 +43,24 @@ const validateToken = async (username, password) => {
 
   try {
 
-    // change to POST
-    const { data } = await axios.get(loginUrl, {
+    await axios.get(loginUrl, {
       params: {
         api_key: apiKey,
         username: username,
         password: password,
-        request_token: request_token
+        request_token: sessionStorage.getItem('request_token')
       }
     })
 
-    token_validated = true
+    sessionStorage.setItem("token_validated", true)
 
   } catch (error) {
 
     console.log("Error getting validation for token")
     console.log(error)
 
-    request_token = ""
-    token_validated = false
+    sessionStorage.removeItem("request_token")
+    sessionStorage.removeItem("token_validated")
   }
 }
 
@@ -87,17 +70,17 @@ export const login = async (username, password) => {
 
   try {
 
-    // change to POST
     const { data } = await axios.get(sessionUrl, {
       params: {
         api_key: apiKey,
-        request_token: request_token
+        request_token: sessionStorage.getItem('request_token')
       }
     })
 
-    session_id = data['session_id']
+    sessionStorage.setItem("session_id", data['session_id'])
 
-    console.log("session. " + session_id + "\ntoken used. " + request_token + " validated? " + token_validated)
+    console.log("session. " + sessionStorage.getItem('session_id') + "\ntoken used. "
+      + sessionStorage.getItem('request_token') + " validated? " + sessionStorage.getItem('token_validated'))
 
     return true
   } catch (error) {
@@ -105,9 +88,9 @@ export const login = async (username, password) => {
     console.log("Error logging in")
     console.log(error)
 
-    session_id = ""
-    request_token = ""
-    token_validated = false
+    sessionStorage.removeItem("session_id")
+    sessionStorage.removeItem("request_token")
+    sessionStorage.removeItem("token_validated")
     return false
   }
 }
