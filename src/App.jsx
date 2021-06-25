@@ -8,6 +8,7 @@ import Account from './pages/Account'
 import Search from './pages/Search'
 import Error from './pages/Error'
 import Login from './pages/Login'
+import Logout from './pages/Logout'
 import Product from './pages/Product'
 import Navigation from './components/Navigation'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
@@ -26,6 +27,7 @@ function App() {
           <Route path='/people/:sort_type' component={People} />
           <Route path='/account' component={Account} />
           <Route path='/login' component={Login} />
+          <Route path='/logout' component={Logout} />
           <Route path='/search' component={Search} />
           <Route><Error type="404" /> </Route>
         </Switch>
