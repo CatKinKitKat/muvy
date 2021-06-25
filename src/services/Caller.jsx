@@ -13,6 +13,8 @@ const movieUrl = `${url}/movie` // GET
 const moviesGenresUrl = `${url}/genre/movie/list` // GET
 const serieUrl = `${url}/tv` // GET
 const serieGenresUrl = `${url}/genre/tv/list` // GET
+const trendingMoviesUrl = `${url}/trending/movie/week` // GET
+const trendingSeriesUrl = `${url}/trending/tv/week` // GET
 const trendingPeopleUrl = `${url}/trending/person/week` // GET
 
 const getToken = async () => {
@@ -101,9 +103,15 @@ export const logout = async () => {
 
 export const fetchMovies = async (type, page) => {
 
-  const urlBuilder = movieUrl + "/" + type
   const posterUrl = 'https://image.tmdb.org/t/p/w500/'
   var data = []
+  var urlBuilder = ""
+
+  if (type === "trending") {
+    urlBuilder = trendingMoviesUrl
+  } else {
+    urlBuilder = movieUrl + "/" + type
+  }
 
   if (page == "") {
     page = 1
@@ -176,9 +184,15 @@ export const fetchPeople = async () => {
 
 export const fetchSeries = async (type, page) => {
 
-  const urlBuilder = serieUrl + "/" + type
   const posterUrl = 'https://image.tmdb.org/t/p/w500/'
   var data = []
+  var urlBuilder = ""
+
+  if (type === "trending") {
+    urlBuilder = trendingSeriesUrl
+  } else {
+    urlBuilder = serieUrl + "/" + type
+  }
 
   if (page == "") {
     page = 1

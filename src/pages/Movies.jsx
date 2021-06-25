@@ -37,6 +37,7 @@ const Movies = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
+              <Dropdown.Item href="/movies/trending">TRENDING</Dropdown.Item>
               <Dropdown.Item href="/movies/top_rated">TOP RATED</Dropdown.Item>
               <Dropdown.Item href="/movies/now_playing">NOW PLAYING</Dropdown.Item>
               <Dropdown.Item href="/movies/popular">POPULAR</Dropdown.Item>
