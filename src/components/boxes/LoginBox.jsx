@@ -12,10 +12,10 @@ const LoginBox = () => {
     event.preventDefault()
     if (login(username, password)) {
       alert("Login Successeful")
-      window.location.replace("/")
+     // window.location.replace("/")
     } else {
       alert("Login Unsuccesseful")
-      window.location.replace("/account")
+     // window.location.replace("/account")
     }
   }
 

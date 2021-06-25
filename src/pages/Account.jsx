@@ -5,7 +5,7 @@ import { checkLogin } from '../services/Caller'
 const Account = () => {
 
   if (sessionStorage.getItem('session_id') === null) {
-    window.location.replace("/login")
+   // window.location.replace("/login")
   }
 
   return (

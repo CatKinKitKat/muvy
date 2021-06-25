@@ -13,6 +13,9 @@ const Series = () => {
   useEffect(() => {
     const fetchAPI = async () => {
       setTitle(sort_type.toUpperCase().replace(/_/g," ") + " SERIES")
+      
+      console.log(await fetchSeries(sort_type, 1))
+      
       setSeries(await fetchSeries(sort_type, 1))
     }
     fetchAPI()
