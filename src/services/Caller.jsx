@@ -8,6 +8,7 @@ const requestTokenUrl = `${url}/authentication/token/new` // GET
 const loginUrl = `${url}/authentication/token/validate_with_login` // POST
 const sessionUrl = `${url}/authentication/session/new`// POST
 const deleteSessionUrl = `${url}/authentication/session`// DELETE
+const accountUrl = `${url}/account` // GET
 const peopleUrl = `${url}/person` // GET
 const movieUrl = `${url}/movie` // GET
 const serieUrl = `${url}/tv` // GET
@@ -17,6 +18,28 @@ const trendingSeriesUrl = `${url}/trending/tv/week` // GET
 const moviesGenresUrl = `${url}/genre/movie/list` // GET
 const serieGenresUrl = `${url}/genre/tv/list` // GET
 
+export const getSessionId = () => {
+  return localStorage.getItem('session_id')
+}
+
+export const getAccountDetails = async () => {
+
+  var data = []
+
+  await axios.get(accountUrl, {
+    params: {
+      api_key: apiKey,
+      session_id: localStorage.getItem('session_id')
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(error => {
+    return data
+  })
+
+  return data
+}
+
 const getToken = async () => {
 
   await axios.get(requestTokenUrl, {
@@ -24,13 +47,13 @@ const getToken = async () => {
       api_key: apiKey
     }
   }).then(response => {
-    sessionStorage.setItem("request_token", response.data.request_token)
-    sessionStorage.setItem("token_validated", false)
+    localStorage.setItem("request_token", response.data.request_token)
+    localStorage.setItem("token_validated", false)
   }).catch(error => {
     console.log("Error getting primitive token")
     console.log(error)
-    sessionStorage.removeItem("request_token")
-    sessionStorage.removeItem("token_validated")
+    localStorage.removeItem("request_token")
+    localStorage.removeItem("token_validated")
   })
 }
 
@@ -40,18 +63,18 @@ const validateToken = async (username, password) => {
   await axios.post(loginUrl, {
     username: username,
     password: password,
-    request_token: sessionStorage.getItem('request_token')
+    request_token: localStorage.getItem('request_token')
   }, {
     params: {
       api_key: apiKey
     }
   }).then(response => {
-    sessionStorage.setItem("token_validated", true)
+    localStorage.setItem("token_validated", true)
   }).catch(error => {
     console.log("Error getting validation for token")
     console.log(error)
-    sessionStorage.removeItem("request_token")
-    sessionStorage.removeItem("token_validated")
+    localStorage.removeItem("request_token")
+    localStorage.removeItem("token_validated")
   })
 }
 
@@ -59,22 +82,22 @@ export const login = async (username, password) => {
 
   await validateToken(username, password)
   await axios.post(sessionUrl, {
-    request_token: sessionStorage.getItem('request_token')
+    request_token: localStorage.getItem('request_token')
   }, {
     params: {
       api_key: apiKey
     }
   }).then(response => {
-    sessionStorage.setItem("session_id", response.data.session_id)
-    console.log("session. " + sessionStorage.getItem('session_id') + "\ntoken used. "
-      + sessionStorage.getItem('request_token') + " validated? " + sessionStorage.getItem('token_validated'))
+    localStorage.setItem("session_id", response.data.session_id)
+    console.log("session. " + localStorage.getItem('session_id') + "\ntoken used. "
+      + localStorage.getItem('request_token') + " validated? " + localStorage.getItem('token_validated'))
     return true
   }).catch(error => {
     console.log("Error logging in")
     console.log(error)
-    sessionStorage.removeItem("session_id")
-    sessionStorage.removeItem("request_token")
-    sessionStorage.removeItem("token_validated")
+    localStorage.removeItem("session_id")
+    localStorage.removeItem("request_token")
+    localStorage.removeItem("token_validated")
     return false
   })
 }
@@ -83,21 +106,21 @@ export const login = async (username, password) => {
 export const logout = async () => {
 
   await axios.delete(deleteSessionUrl, {
-    session_id: sessionStorage.getItem('session_id')
+    session_id: localStorage.getItem('session_id')
   }, {
     params: {
       api_key: apiKey
     }
   }).then(response => {
-    sessionStorage.removeItem("session_id")
-    sessionStorage.removeItem("request_token")
-    sessionStorage.removeItem("token_validated")
+    localStorage.removeItem("session_id")
+    localStorage.removeItem("request_token")
+    localStorage.removeItem("token_validated")
   }).catch(error => {
     console.log("Error logging out")
     console.log(error)
-    sessionStorage.removeItem("session_id")
-    sessionStorage.removeItem("request_token")
-    sessionStorage.removeItem("token_validated")
+    localStorage.removeItem("session_id")
+    localStorage.removeItem("request_token")
+    localStorage.removeItem("token_validated")
   })
 }
 
@@ -168,7 +191,7 @@ export const fetchPeople = async (type, page) => {
   } else {
     urlBuilder = peopleUrl + "/" + type
   }
-  
+
   if (page == "") {
     page = 1
   }
@@ -206,7 +229,7 @@ export const fetchSeries = async (type, page) => {
   } else {
     urlBuilder = serieUrl + "/" + type
   }
-  
+
   if (page == "") {
     page = 1
   }

@@ -1,10 +1,11 @@
 import { React, useState } from 'react'
 import { Container, Card, Form, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { login } from '../../services/Caller'
 
 const LoginBox = () => {
 
+  const history = useHistory();
   const [username, setUsername] = useState([])
   const [password, setPassword] = useState([])
 
@@ -12,10 +13,10 @@ const LoginBox = () => {
     event.preventDefault()
     if (login(username, password)) {
       alert("Login Successeful")
-     // window.location.replace("/")
+      history.push('/')
     } else {
       alert("Login Unsuccesseful")
-     // window.location.replace("/account")
+      history.push('/login')
     }
   }
 

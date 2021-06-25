@@ -1,16 +1,29 @@
-import React from 'react'
+import { React, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Container, Row, Col, Image } from 'react-bootstrap'
+import { getAccountDetails } from '../../services/Caller'
 
-const AccountBox = (props) => {
+const AccountBox = () => {
 
-  const imgLink = "https://www.gravatar.com/avatar/" + props.hash
+  const [details, setDetails] = useState([])
+  const imgLink = (hash) => {
+    return "https://www.gravatar.com/avatar/" + hash
+  }
+
+  useEffect(() => {
+    const fetchAPI = async () => {
+      setDetails(await getAccountDetails())
+    }
+    fetchAPI()
+  }, [])
+
 
   return (
     <Container>
       <Row>
         <Col>
-          <Image src={imgLink} rounded />
+          <h1>{details.username}</h1>
+          <Image src={imgLink()} rounded />
         </Col>
         <Col>
 

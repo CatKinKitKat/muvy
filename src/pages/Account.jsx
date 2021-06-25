@@ -1,11 +1,13 @@
-import { React, useState, useEffect}  from 'react'
+import { React, useState, useEffect } from 'react'
 import AccountBox from '../components/boxes/AccountBox'
-import { checkLogin } from '../services/Caller'
+import { useHistory } from 'react-router-dom'
 
 const Account = () => {
 
-  if (sessionStorage.getItem('session_id') === null) {
-   // window.location.replace("/login")
+  const history = useHistory();
+
+  if (localStorage.getItem('session_id') === null) {
+    history.push("/login")
   }
 
   return (
