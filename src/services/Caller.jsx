@@ -20,6 +20,104 @@ const trendingSeriesUrl = `${url}/trending/tv/week` // GET
 // const moviesGenresUrl = `${url}/genre/movie/list` // GET
 // const serieGenresUrl = `${url}/genre/tv/list` // GET
 
+export const getAccId = async () => {
+  try {
+    let data = await getAccountDetails()
+    return data.id
+  } catch (_error) {
+    return null
+  }
+}
+
+export const addToFavourites = async (type, id) => {
+
+  let data = []
+  const urlBuilder = accountUrl + "/" + await getAccId() + "/favorite"
+
+  await axios.post(urlBuilder, {
+    media_type: type,
+    media_id: id,
+    favorite: true
+  }, {
+    params: {
+      api_key: apiKey,
+      session_id: localStorage.getItem('session_id')
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return data
+  })
+
+  return data
+
+}
+
+
+export const fetchFavouriteMovies = async (id) => {
+
+  let data = []
+  const posterUrl = 'https://image.tmdb.org/t/p/w500/'
+  const urlBuilder = accountUrl + "/" + id + "/favorite/movies"
+
+  await axios.get(urlBuilder, {
+    params: {
+      api_key: apiKey,
+      session_id: localStorage.getItem('session_id')
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return data
+  })
+
+  const modifiedData = data.results.map((m) => ({
+    id: m.id,
+    year: m.release_date.substring(0, 4),
+    backPoster: posterUrl + m.backdrop_path,
+    popularity: m.popularity,
+    title: m.title,
+    poster: posterUrl + m.poster_path,
+    overview: m.overview,
+    rating: m.vote_average
+  }))
+
+  return modifiedData
+}
+
+export const fetchFavouriteSeries = async (id) => {
+
+  let data = []
+  const posterUrl = 'https://image.tmdb.org/t/p/w500/'
+  const urlBuilder = accountUrl + "/" + id + "/favorite/tv"
+
+  await axios.get(urlBuilder, {
+    params: {
+      api_key: apiKey,
+      session_id: localStorage.getItem('session_id')
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return data
+  })
+
+  const modifiedData = data.results.map((m) => ({
+    id: m.id,
+    year: m.first_air_date.substring(0, 4),
+    backPoster: posterUrl + m.backdrop_path,
+    popularity: m.popularity,
+    title: m.name,
+    poster: posterUrl + m.poster_path,
+    overview: m.overview,
+    rating: m.vote_average
+  }))
+
+  return modifiedData
+}
+
+
+
 export const getSessionId = () => {
   return localStorage.getItem('session_id')
 }
@@ -210,6 +308,23 @@ export const fetchPeople = async (type, page) => {
   return modifiedData
 }
 
+export const fetchSerieDetail = async (id) => {
+  let data = []
+
+  await axios.get(`${serieUrl}/${id}`, {
+    params: {
+      api_key: apiKey,
+      language: 'en_GB'
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return data
+  })
+
+  return data
+}
+
 export const fetchSeries = async (type, page) => {
   const posterUrl = 'https://image.tmdb.org/t/p/w500/'
   let data = []
@@ -286,7 +401,26 @@ export const fetchMovieVideos = async (id) => {
   return modifiedData
 }
 
-export const fetchCasts = async (id) => {
+export const fetchSerieVideos = async (id) => {
+  let data = []
+  await axios.get(`${serieUrl}/${id}/videos`, {
+    params: {
+      api_key: apiKey
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return data
+  })
+  const modifiedData = data.results.map((m) => ({
+    type: m.type,
+    key: m.key
+  }))
+
+  return modifiedData
+}
+
+export const fetchMovieCasts = async (id) => {
   const urlBuilder = movieUrl + '/' + id + castUrl
   let data = []
   await axios.get(urlBuilder, {
@@ -300,6 +434,29 @@ export const fetchCasts = async (id) => {
   })
   const modifiedData = data.cast.map((c) => ({
     id: c.cast_id,
+    character: c.character,
+    name: c.name,
+    img: 'https://image.tmdb.org/t/p/w500' + c.profile_path
+  }))
+
+  return modifiedData
+}
+
+export const fetchSerieCasts = async (id) => {
+  const urlBuilder = serieUrl + '/' + id + castUrl
+  console.log(urlBuilder)
+  let data = []
+  await axios.get(urlBuilder, {
+    params: {
+      api_key: apiKey
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return data
+  })
+  const modifiedData = data.cast.map((c) => ({
+    id: c.id,
     character: c.character,
     name: c.name,
     img: 'https://image.tmdb.org/t/p/w200' + c.profile_path
@@ -326,8 +483,36 @@ export const fetchSimilarMovie = async (id) => {
   const modifiedData = data.results.map((m) => ({
     id: m.id,
     backPoster: posterUrl + m.backdrop_path,
-    popularity: m.popularith,
-    title: m.title,
+    popularity: m.popularity,
+    title: m.name,
+    poster: posterUrl + m.poster_path,
+    overview: m.overview,
+    rating: m.vote_average
+  }))
+
+  return modifiedData
+}
+
+export const fetchSimilarSerie = async (id) => {
+  const posterUrl = 'https://image.tmdb.org/t/p/w500/'
+  const urlBuilder = serieUrl + '/' + id + similarUrl
+
+  let data = []
+  await axios.get(urlBuilder, {
+    params: {
+      api_key: apiKey,
+      language: 'en_GB'
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return data
+  })
+  const modifiedData = data.results.map((m) => ({
+    id: m.id,
+    backPoster: posterUrl + m.backdrop_path,
+    popularity: m.popularity,
+    title: m.name,
     poster: posterUrl + m.poster_path,
     overview: m.overview,
     rating: m.vote_average

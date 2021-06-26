@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Image, Button, Container, Card, Col, Row } from 'react-bootstrap'
-import { Star, Bookmark } from 'react-bootstrap-icons'
 import ReactStars from 'react-rating-stars-component'
 import VideoModal from './VideoModal'
 import CastBox from './boxes/CastBox'
 import RecomendedMovieBox from './boxes/RecomendedMovieBox'
+import BookmarkButton from './buttons/BookmarkButton'
+import ChatButton from './buttons/ChatButton'
+import FavouriteButton from './buttons/FavouriteButton'
+import WatchListButton from './buttons/WatchListButton'
 import {
   fetchMovieDetail,
   fetchMovieVideos,
-  fetchCasts,
+  fetchMovieCasts,
   fetchSimilarMovie
 } from '../services/Caller'
 
@@ -17,7 +20,6 @@ const MovieDetail = () => {
   let genres = []
   let genresList = []
   const [detail, setDetail] = useState([])
-  const [isOpen, setIsOpen] = useState(false)
   const [video, setVideo] = useState([])
   const [casts, setCasts] = useState([])
   const [similarMovie, setSimilarMovie] = useState([])
@@ -27,7 +29,7 @@ const MovieDetail = () => {
     const fetchAPI = async () => {
       setDetail(await fetchMovieDetail(id))
       setVideo(await fetchMovieVideos(id))
-      setCasts(await fetchCasts(id))
+      setCasts(await fetchMovieCasts(id))
       setSimilarMovie(await fetchSimilarMovie(id))
     }
     fetchAPI()
@@ -44,7 +46,7 @@ const MovieDetail = () => {
       }
 
       return (
-        <li className="d-inline" key={index}>
+        <li className="collapse d-md-inline" key={index}>
           <Button variant="outline" className={'fs-2 text-' + color()}>
             {item.name}
           </Button>
@@ -69,10 +71,11 @@ const MovieDetail = () => {
     )
   })
 
-  const budgetParser = (budget) => {
-    if (budget == '0' || budget === undefined) {
+  const revenueParser = (revenue) => {
+    if (revenue === null || revenue === undefined) {
       return 'Very High'
     }
+    return revenue + "$"
   }
 
   const posterGet = (poster) => {
@@ -102,21 +105,21 @@ const MovieDetail = () => {
             <VideoModal id={id} title={detail.title} color="muted" />
           </Col>
           <Col className="text-end justify-content-right align-self-center">
-            <div className="btn-group-vertical">
-              <Button variant="muted" className="fs-1 text-primary"><Star /></Button>
-              <Button variant="muted" className="fs-1 text-primary"><Star /></Button>
-              <Button variant="muted" className="fs-1 text-primary"><Star /></Button>
-              <Button variant="muted" className="fs-1 text-primary"><Star /></Button>
+            <div className="btn-group-vertical collapse d-md-inline">
+              <ChatButton />
+              <BookmarkButton />
+              <FavouriteButton type="movie" id={id}/>
+              <WatchListButton />
             </div>
           </Col>
           <Row className="py-2 text-start d-inline-block">
-            <h3 className="px-4">Genres: </h3>
+            <h3 className="px-4 collapse d-md-flex">Genres: </h3>
             {genresList}
           </Row>
         </Row>
       </Col>
       <Col className="p-5 text-center">
-        <Row>
+        <Row className="collapse d-lg-flex">
           <div className="col-md-3">
             <p>RELEASE DATE</p>
             <h2>{detail.release_date}</h2>
@@ -126,8 +129,8 @@ const MovieDetail = () => {
             <h2>{detail.runtime} minutes</h2>
           </div>
           <div className="col-md-3">
-            <p>BUDGET</p>
-            <h2>{budgetParser(detail.budget)}</h2>
+            <p>REVENUE</p>
+            <h2>{revenueParser(detail.revenue)}</h2>
           </div>
           <div className="col-md-3 px-0">
             <p>HOMEPAGE</p>

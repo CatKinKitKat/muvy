@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import FavouriteItemBoxRow from "../FavouriteItemBoxRow";
 import { Container, Row, Col, Image, Button } from 'react-bootstrap'
+import { fetchFavouriteMovies, fetchFavouriteSeries } from '../../services/Caller'
 
 const AccountBox = (props) => {
+
+  const [favouriteMovies, setFavouriteMovies] = useState([])
+  const [favouriteSeries, setFavouriteSeries] = useState([])
+  useEffect(() => {
+    const fetchAPI = async () => {
+      setFavouriteMovies(await fetchFavouriteMovies(props.id))
+      setFavouriteSeries(await fetchFavouriteSeries(props.id))
+    }
+    fetchAPI()
+  }, [])
+
+
+
   const imgLink = (hash) => {
     return 'https://www.gravatar.com/avatar/' + hash
   }
@@ -39,8 +54,17 @@ const AccountBox = (props) => {
         <Row>
           <p className="text-white px-4">Mature Content is {matureIndicator(props.mature)}.</p>
         </Row>
+        <Row className="bg-light">
+          <h4>Favourite Movies: </h4>
+          <FavouriteItemBoxRow list={favouriteMovies.slice(0, 10)} type="movie"></FavouriteItemBoxRow>
+        </Row>
+        <Row className="bg-light">
+          <h4>Favourite Series: </h4>
+          <FavouriteItemBoxRow list={favouriteSeries.slice(0, 10)} type="serie"></FavouriteItemBoxRow>
+        </Row>
+        <Row className="bg-light"></Row>
+        <Row className="bg-light"></Row>
       </Col>
-
     </Container>
   )
 }
