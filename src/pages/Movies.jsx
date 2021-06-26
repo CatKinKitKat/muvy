@@ -5,14 +5,13 @@ import MovieBox from '../components/boxes/MovieBox'
 import { fetchMovies } from '../services/Caller'
 
 const Movies = () => {
-
   const [movies, setMovies] = useState([])
-  var [title, setTitle] = useState([])
+  const [title, setTitle] = useState([])
   const { sort_type } = useParams()
 
   useEffect(() => {
     const fetchAPI = async () => {
-      setTitle(sort_type.toUpperCase().replace(/_/g," ") + " MOVIES")
+      setTitle(sort_type.toUpperCase().replace(/_/g, ' ') + ' MOVIES')
       setMovies(await fetchMovies(sort_type, 1))
     }
     fetchAPI()

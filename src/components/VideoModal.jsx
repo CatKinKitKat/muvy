@@ -1,26 +1,60 @@
-import React, { useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'react-bootstrap'
-import ModalVideo from 'react-modal-video'
-import "react-modal-video/css/modal-video.min.css"
+import { Modal, Button } from 'react-bootstrap'
+import ReactPlayer from 'react-player'
+import { fetchTrailer } from '../services/Caller'
 
-const VideoModal = (props) => {
+export const VideoModal = (props) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [key, setVideo] = useState([])
 
-  const [isOpen, setOpen] = useState(false)
+  useEffect(() => {
+    const fetchAPI = async () => {
+      setVideo(await fetchTrailer(props.id))
+    }
+    fetchAPI()
+  }, [])
 
-  // Componente Outdated mas a melhor escolha enquanto funciona; este usa o metodo Transition que vai ser deprecado
+  const youtubeUrl = 'https://www.youtube.com/watch?v=' + key
   return (
-    <React.Fragment>
-      <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId={props.link} onClose={() => setOpen(false)} />
-      <Button variant="danger" onClick={
-        () => setOpen(true)
-      } className="mt-auto p-2">Trailer</Button>
-    </React.Fragment>
+
+    <>
+      <Button onClick={() => setIsOpen(true)} variant={props.color}>WATCH TRAILER</Button>
+      <Modal
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={isOpen}
+        onHide={() => {
+          setIsOpen(false)
+        }}
+      >
+        <Modal.Header closeButton >
+          <Modal.Title
+            id="contained-modal-title-vcenter"
+            style={{ color: '#000000', fontWeight: 'bolder' }}
+          >
+            {props.title}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ backgroundColor: '#000000' }}>
+          <ReactPlayer
+            className="container-fluid"
+            url={youtubeUrl}
+            playing
+            width="100%"
+          >
+          </ReactPlayer>
+        </Modal.Body>
+      </Modal>
+    </>
   )
 }
 
 VideoModal.propTypes = {
-  link: PropTypes.string
+  id: PropTypes.number,
+  title: PropTypes.string,
+  color: PropTypes.string
 }
 
 export default VideoModal

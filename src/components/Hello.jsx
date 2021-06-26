@@ -2,12 +2,11 @@ import React from 'react'
 import { Jumbotron, Button } from 'react-bootstrap'
 
 const Hello = () => {
-
   const randy = () => {
-    return Math.floor(Math.random() * (999999 - 1) + 1);
+    return Math.floor(Math.random() * (999999 - 1) + 1)
   }
 
-  const link = "/movie/" + randy();
+  const link = '/movie/' + randy()
 
   return (
     <Jumbotron className="pt-3">

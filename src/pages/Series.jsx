@@ -5,14 +5,13 @@ import SerieBox from '../components/boxes/SerieBox'
 import { fetchSeries } from '../services/Caller'
 
 const Series = () => {
-
   const [series, setSeries] = useState([])
-  var [title, setTitle] = useState([])
+  const [title, setTitle] = useState([])
   const { sort_type } = useParams()
 
   useEffect(() => {
     const fetchAPI = async () => {
-      setTitle(sort_type.toUpperCase().replace(/_/g," ") + " SERIES")
+      setTitle(sort_type.toUpperCase().replace(/_/g, ' ') + ' SERIES')
       setSeries(await fetchSeries(sort_type, 1))
     }
     fetchAPI()
@@ -30,7 +29,7 @@ const Series = () => {
     <Container>
       <Row className="pt-3">
         <Col>
-        <h1 className="pt-3">{title}</h1>
+          <h1 className="pt-3">{title}</h1>
           <Dropdown>
             <Dropdown.Toggle variant="secondary" size="sm" id="dropdown-basic" className="fs-4 text-secondary">
               SORT

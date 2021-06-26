@@ -4,18 +4,17 @@ import { useHistory } from 'react-router-dom'
 import { login } from '../../services/Caller'
 
 const LoginBox = () => {
-
-  const history = useHistory();
+  const history = useHistory()
   const [username, setUsername] = useState([])
   const [password, setPassword] = useState([])
 
   const FormHandler = (event) => {
     event.preventDefault()
     if (login(username, password)) {
-      alert("Login Successeful")
+      alert('Login Successeful')
       history.push('/')
     } else {
-      alert("Login Unsuccesseful")
+      alert('Login Unsuccesseful')
       history.push('/login')
     }
   }
@@ -25,7 +24,7 @@ const LoginBox = () => {
   }
 
   const PasswordHandler = (event) => {
-    setPassword(event.target.value);
+    setPassword(event.target.value)
   }
 
   return (

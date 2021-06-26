@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Dropdown, Col, Row, Container } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
-import { fetchPeople } from "../services/Caller"
+import { fetchPeople } from '../services/Caller'
 import PersonBox from '../components/boxes/PersonBox'
 
 const People = () => {
-
   const [people, setPeople] = useState([])
-  var [title, setTitle] = useState([])
+  const [title, setTitle] = useState([])
   const { sort_type } = useParams()
 
   useEffect(() => {
     const fetchAPI = async () => {
-      setTitle(sort_type.toUpperCase().replace(/_/g, " ") + " PEOPLE")
+      setTitle(sort_type.toUpperCase().replace(/_/g, ' ') + ' PEOPLE')
       setPeople(await fetchPeople(sort_type, 1))
     }
     fetchAPI()

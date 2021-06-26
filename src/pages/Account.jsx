@@ -4,8 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { getAccountDetails } from '../services/Caller'
 
 const Account = () => {
-
-  const history = useHistory();
+  const history = useHistory()
   const [details, setDetails] = useState([])
 
   useEffect(() => {
@@ -16,14 +15,13 @@ const Account = () => {
   }, [])
 
   if (localStorage.getItem('session_id') === null) {
-    history.push("/login")
+    history.push('/login')
   }
 
   return (
     <AccountBox id={details.id} name={details.name} username={details.username}
     mature={details.mature} />
   )
-
 }
 
 export default Account

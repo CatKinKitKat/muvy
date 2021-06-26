@@ -3,12 +3,11 @@ import { Image, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 const SerieBox = (props) => {
-
-  const link = "/serie/" + props.id.toString()
+  const link = '/serie/' + props.id.toString()
 
   const nameHandle = (title) => {
     if (title.length >= 25) {
-      return title.substring(0,25) + "..."
+      return title.substring(0, 25) + '...'
     }
     return title
   }
@@ -20,7 +19,7 @@ const SerieBox = (props) => {
         className="mx-auto d-block py-1"
         src={props.imgUrl}
         style={{
-          maxHeight: "100%", maxWidth: "15vw"
+          maxHeight: '100%', maxWidth: '15vw'
         }} />
       <Button variant="outline" href={link}>
         <p className="fs-5 text-primary p-0">{nameHandle(props.title)} ({props.year})</p>

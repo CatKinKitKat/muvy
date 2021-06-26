@@ -9,7 +9,8 @@ import Search from './pages/Search'
 import Error from './pages/Error'
 import Login from './pages/Login'
 import Logout from './pages/Logout'
-import Product from './pages/Product'
+import Movie from './pages/Movie'
+import Serie from './pages/Serie'
 import Navigation from './components/Navigation'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
@@ -20,7 +21,8 @@ function App() {
         <Navigation />
         <Switch>
           <Route path='/' exact component={Home} />
-          <Route path='/movie/:id' component={Product} />
+          <Route path='/movie/:id' component={Movie} />
+          <Route path='/serie/:id' component={Serie} />
           <Route path='/movies/:sort_type' component={Movies} />
           <Route path='/series/:sort_type' component={Series} />
           <Route path='/person' component={Person} />

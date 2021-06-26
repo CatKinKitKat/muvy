@@ -5,11 +5,10 @@ import Hello from '../components/Hello'
 import { fetchMovies } from '../services/Caller'
 
 const Home = () => {
-  
   const [nowPlaying, setNowPlaying] = useState([])
   useEffect(() => {
     const fetchAPI = async () => {
-      setNowPlaying(await fetchMovies("now_playing", 1))
+      setNowPlaying(await fetchMovies('now_playing', 1))
     }
     fetchAPI()
   }, [])

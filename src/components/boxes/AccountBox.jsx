@@ -2,11 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Container, Row, Col, Image, Button } from 'react-bootstrap'
 
-
 const AccountBox = (props) => {
-
   const imgLink = (hash) => {
-    return "https://www.gravatar.com/avatar/" + hash
+    return 'https://www.gravatar.com/avatar/' + hash
   }
 
   const matureIndicator = (flag) => {
@@ -26,7 +24,7 @@ const AccountBox = (props) => {
       <Col className="bg-dark">
         <Row className="p-5 pb-0">
           <Col>
-            <Image src={imgLink("")} style={{ aspectRatio: "1/1", width: "12.5rem" }} roundedCircle />
+            <Image src={imgLink('')} style={{ aspectRatio: '1/1', width: '12.5rem' }} roundedCircle />
           </Col>
           <Col className="">
             <div className="text-end">

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, CardDeck, Col } from 'react-bootstrap'
+import { Container, CardDeck } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import HomeMovieBox from './boxes/HomeMovieBox'
 
