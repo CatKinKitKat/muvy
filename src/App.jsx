@@ -28,7 +28,7 @@ function App() {
           <Route path='/series/:sort_type' component={Series} />
           <Route path='/person/:id' component={Person} />
           <Route path='/people/:sort_type' component={People} />
-          <Route path='/discussion' component={Discussion} />
+          <Route path='/discussion/:type/:id' component={Discussion} />
           <Route path='/account' component={Account} />
           <Route path='/login' component={Login} />
           <Route path='/logout' component={Logout} />

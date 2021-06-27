@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { FileEarmarkEaselFill } from 'react-bootstrap-icons'
 
 const apiKey = 'a376a8713895b520ccb34e514f0fbe51'
 
@@ -350,6 +349,8 @@ const getToken = async () => {
 }
 
 const validateToken = async (username, password) => {
+
+  let data = []
   await getToken()
   await axios.post(loginUrl, {
     username: username,
@@ -359,18 +360,31 @@ const validateToken = async (username, password) => {
     params: {
       api_key: apiKey
     }
-  }).then(_response => {
+  }).then(response => {
     localStorage.setItem('token_validated', true)
+    data = response.data
   }).catch(error => {
     console.log('Error getting validation for token')
     console.log(error)
     localStorage.removeItem('request_token')
     localStorage.removeItem('token_validated')
   })
+
+  return data.success
 }
 
 export const login = async (username, password) => {
-  await validateToken(username, password)
+
+  let data = []
+  let bool = await validateToken(username, password)
+
+  if (bool === "false") {
+    localStorage.removeItem('session_id')
+    localStorage.removeItem('request_token')
+    localStorage.removeItem('token_validated')
+    return false
+  }
+  
   await axios.post(sessionUrl, {
     request_token: localStorage.getItem('request_token')
   }, {
@@ -381,7 +395,7 @@ export const login = async (username, password) => {
     localStorage.setItem('session_id', response.data.session_id)
     console.log('session. ' + localStorage.getItem('session_id') + '\ntoken used. ' +
       localStorage.getItem('request_token') + ' validated? ' + localStorage.getItem('token_validated'))
-    return true
+    data = response.data
   }).catch(error => {
     console.log('Error logging in')
     console.log(error)
@@ -390,6 +404,8 @@ export const login = async (username, password) => {
     localStorage.removeItem('token_validated')
     return false
   })
+
+  return data.success
 }
 
 export const logout = async () => {

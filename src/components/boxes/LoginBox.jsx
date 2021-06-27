@@ -1,20 +1,21 @@
 import { React, useState } from 'react'
 import { Container, Card, Form, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
-import { login } from '../../services/Caller'
+import { login, logout } from '../../services/Caller'
 
 const LoginBox = () => {
   const history = useHistory()
   const [username, setUsername] = useState([])
   const [password, setPassword] = useState([])
 
-  const FormHandler = (event) => {
+  const FormHandler = async (event) => {
     event.preventDefault()
-    if (login(username, password)) {
+    if (await login(username, password)) {
       alert('Login Successeful')
       history.push('/')
     } else {
       alert('Login Unsuccesseful')
+      logout()
       history.push('/login')
     }
   }
