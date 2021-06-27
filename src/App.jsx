@@ -4,6 +4,7 @@ import Movies from './pages/Movies'
 import Series from './pages/Series'
 import Person from './pages/Person'
 import People from './pages/People'
+import Discussion from './pages/Discussion'
 import Account from './pages/Account'
 import Search from './pages/Search'
 import Error from './pages/Error'
@@ -27,6 +28,7 @@ function App() {
           <Route path='/series/:sort_type' component={Series} />
           <Route path='/person/:id' component={Person} />
           <Route path='/people/:sort_type' component={People} />
+          <Route path='/discussion' component={Discussion} />
           <Route path='/account' component={Account} />
           <Route path='/login' component={Login} />
           <Route path='/logout' component={Logout} />

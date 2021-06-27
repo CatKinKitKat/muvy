@@ -112,10 +112,10 @@ const SerieDetail = () => {
           </Col>
           <Col className="text-end justify-content-right align-self-center">
             <div className="btn-group-vertical collapse d-md-inline">
-              <ChatButton />
+              <ChatButton type="serie" id={id}/>
               <ShareButton title={detail.name} />
               <FavouriteButton type="tv" id={id} />
-              <WatchListButton type="movie" id={id} />
+              <WatchListButton type="tv" id={id} />
             </div>
           </Col>
           <Row className="py-2 text-start d-inline-block">

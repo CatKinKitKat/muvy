@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { getAccountDetails } from '../services/Caller'
 
 const Account = () => {
+  
   const history = useHistory()
   const [details, setDetails] = useState([])
 
@@ -20,7 +21,7 @@ const Account = () => {
 
   return (
     <AccountBox id={details.id} name={details.name} username={details.username}
-    adult={details.include_adult} />
+      adult={details.include_adult} hash={details.hash} />
   )
 }
 

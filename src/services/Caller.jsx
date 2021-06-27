@@ -15,6 +15,7 @@ const movieUrl = `${url}/movie` // GET
 const serieUrl = `${url}/tv` // GET
 const castUrl = '/credits' // GET
 const similarUrl = '/similar' // GET
+const searchUrl = '/search/multi' //GET
 const trendingPeopleUrl = `${url}/trending/person/week` // GET
 const trendingMoviesUrl = `${url}/trending/movie/week` // GET
 const trendingSeriesUrl = `${url}/trending/tv/week` // GET
@@ -177,6 +178,7 @@ export const fetchFavouriteMovies = async (id) => {
     return date.substring(0, 4)
   }
 
+  if (data.results === undefined) return []
   const modifiedData = data.results.map((m) => ({
     id: m.id,
     year: getYear(m.release_date),
@@ -214,6 +216,8 @@ export const fetchFavouriteSeries = async (id) => {
     }
     return date.substring(0, 4)
   }
+
+  if (data.results === undefined) return []
   const modifiedData = data.results.map((m) => ({
     id: m.id,
     year: getYear(m.first_air_date),
@@ -252,6 +256,8 @@ export const fetchWatchListMovies = async (id) => {
     }
     return date.substring(0, 4)
   }
+
+  if (data.results === undefined) return []
   const modifiedData = data.results.map((m) => ({
     id: m.id,
     year: getYear(m.release_date),
@@ -289,6 +295,8 @@ export const fetchWatchListSeries = async (id) => {
     }
     return date.substring(0, 4)
   }
+
+  if (data.results === undefined) return []
   const modifiedData = data.results.map((m) => ({
     id: m.id,
     year: getYear(m.first_air_date),
@@ -402,6 +410,57 @@ export const logout = async () => {
     localStorage.removeItem('request_token')
     localStorage.removeItem('token_validated')
   })
+}
+
+
+export const fetchSearch = async (searchValue, page) => {
+
+  const posterUrl = 'https://image.tmdb.org/t/p/w500/'
+  let data = []
+  let finalUrl = url + searchUrl
+
+  if (page === '') {
+    page = 1
+  }
+
+  const getYear = (date) => {
+    if (date === null || date === undefined) {
+      return '2021'
+    }
+    return date.substring(0, 4)
+  }
+  await axios.get(finalUrl, {
+    params: {
+      api_key: apiKey,
+      language: 'en_GB',
+      query: searchValue,
+      page: page
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return data
+  })
+
+  const inconsistency = (title, name) => {
+    if (title === null || title === undefined) {
+      return name
+    } else if (name === null || name === undefined) {
+      return title
+    }
+    return title
+  }
+  const modifiedData = data.results.map((m) => ({
+    id: m.id,
+    type: m.media_type,
+    year: getYear(m.release_date),
+    popularity: m.popularity,
+    title: inconsistency(m.title, m.name),
+    poster: posterUrl + inconsistency(m.poster_path, m.profile_path),
+    rating: m.vote_average
+  }))
+
+  return modifiedData
 }
 
 export const fetchMovies = async (type, page) => {

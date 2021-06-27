@@ -115,7 +115,7 @@ const MovieDetail = () => {
           </Col>
           <Col className="text-end justify-content-right align-self-center">
             <div className="btn-group-vertical collapse d-md-inline">
-              <ChatButton />
+              <ChatButton type="movie" id={id} />
               <ShareButton title={detail.title} />
               <FavouriteButton type="movie" id={id} />
               <WatchListButton type="movie" id={id} />
