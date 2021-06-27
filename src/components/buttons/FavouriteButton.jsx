@@ -1,21 +1,22 @@
 import { React, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'react-bootstrap'
-import { Heart, HeartHalf, HeartFill } from 'react-bootstrap-icons'
+import { HeartFill } from 'react-bootstrap-icons'
 import { getAccId, addToFavourites } from '../../services/Caller'
 
 const FavouriteButton = (props) => {
 
-  const setFav = (acc_id, type, id) => {
+  const setFav = (type, id) => {
     if (getAccId() !== null) {
-      addToFavourites(acc_id, type, id)
+      alert("Added to favourites\nTo remove go to your account page")
+      addToFavourites(type, id)
     }
   }
 
   return (
     <Button variant="muted" className="fs-1 text-primary" onClick={() => { setFav(props.type, props.id) }}>
-      <Heart style={{ fontSize: "calc(100% + 1vw + 1vh)" }} />
-      </Button>
+      <HeartFill style={{ fontSize: "calc(100% + 1vw + 1vh)" }} />
+    </Button>
   )
 }
 

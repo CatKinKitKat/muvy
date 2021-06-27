@@ -2,16 +2,25 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import FavouriteItemBoxRow from "../FavouriteItemBoxRow";
 import { Container, Row, Col, Image, Button } from 'react-bootstrap'
-import { fetchFavouriteMovies, fetchFavouriteSeries } from '../../services/Caller'
+import {
+  fetchFavouriteMovies,
+  fetchFavouriteSeries,
+  fetchWatchListMovies,
+  fetchWatchListSeries
+} from '../../services/Caller'
 
 const AccountBox = (props) => {
 
   const [favouriteMovies, setFavouriteMovies] = useState([])
   const [favouriteSeries, setFavouriteSeries] = useState([])
+  const [watchListMovies, setWatchListMovies] = useState([])
+  const [watchListSeries, setWatchListSeries] = useState([])
   useEffect(() => {
     const fetchAPI = async () => {
       setFavouriteMovies(await fetchFavouriteMovies(props.id))
       setFavouriteSeries(await fetchFavouriteSeries(props.id))
+      setWatchListMovies(await fetchWatchListMovies(props.id))
+      setWatchListSeries(await fetchWatchListSeries(props.id))
     }
     fetchAPI()
   }, [])
@@ -52,18 +61,24 @@ const AccountBox = (props) => {
           <Button variant="danger" className="float-end p-2" href="/logout">Log Out</Button>
         </Col>
         <Row>
-          <p className="text-white px-4">Mature Content is {matureIndicator(props.mature)}.</p>
+          <p className="text-white px-4">Mature Content is {matureIndicator(props.adult)}.</p>
         </Row>
         <Row className="bg-light">
           <h4>Favourite Movies: </h4>
-          <FavouriteItemBoxRow list={favouriteMovies.slice(0, 10)} type="movie"></FavouriteItemBoxRow>
+          <FavouriteItemBoxRow list={favouriteMovies.slice(0, 10)} type="movie" list_type="favourites"></FavouriteItemBoxRow>
         </Row>
         <Row className="bg-light">
           <h4>Favourite Series: </h4>
-          <FavouriteItemBoxRow list={favouriteSeries.slice(0, 10)} type="serie"></FavouriteItemBoxRow>
+          <FavouriteItemBoxRow list={favouriteSeries.slice(0, 10)} type="serie" list_type="favourites"></FavouriteItemBoxRow>
         </Row>
-        <Row className="bg-light"></Row>
-        <Row className="bg-light"></Row>
+        <Row className="bg-light">
+          <h4>Movies in Watchlist: </h4>
+          <FavouriteItemBoxRow list={watchListMovies.slice(0, 10)} type="movie" list_type="watchlist"></FavouriteItemBoxRow>
+        </Row>
+        <Row className="bg-light">
+          <h4>Series in Watchlist: </h4>
+          <FavouriteItemBoxRow list={watchListSeries.slice(0, 10)} type="serie" list_type="watchlist"></FavouriteItemBoxRow>
+        </Row>
       </Col>
     </Container>
   )
@@ -74,7 +89,7 @@ AccountBox.propTypes = {
   hash: PropTypes.string,
   name: PropTypes.string,
   username: PropTypes.string,
-  mature: PropTypes.boolean
+  adult: PropTypes.bool
 }
 
 export default AccountBox

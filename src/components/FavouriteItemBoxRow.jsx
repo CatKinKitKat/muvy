@@ -7,7 +7,7 @@ const FavouriteItemBoxRow = (props) => {
   const list = props.list.map((item, index) => {
     return (
       <Container className="d-flex" key={index}>
-        <FavouriteItemBox title={item.title} year={item.year} imgUrl={item.poster} id={item.id} type={props.type} />
+        <FavouriteItemBox title={item.title} year={item.year} imgUrl={item.poster} id={item.id} type={props.type} list={props.list_type} />
       </Container>
     )
   })
@@ -23,7 +23,8 @@ const FavouriteItemBoxRow = (props) => {
 
 FavouriteItemBoxRow.propTypes = {
   list: PropTypes.array,
-  type: PropTypes.string
+  type: PropTypes.string,
+  list_type: PropTypes.string
 }
 
 export default FavouriteItemBoxRow

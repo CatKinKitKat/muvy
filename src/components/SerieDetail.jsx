@@ -6,13 +6,12 @@ import ReactStars from 'react-rating-stars-component'
 import VideoModal from './VideoModal'
 import CastBox from './boxes/CastBox'
 import RecomendedSerieBox from './boxes/RecomendedSerieBox'
-import BookmarkButton from './buttons/BookmarkButton'
+import ShareButton from './buttons/ShareButton'
 import ChatButton from './buttons/ChatButton'
 import FavouriteButton from './buttons/FavouriteButton'
 import WatchListButton from './buttons/WatchListButton'
 import {
   fetchSerieDetail,
-  fetchSerieVideos,
   fetchSerieCasts,
   fetchSimilarSerie
 } from '../services/Caller'
@@ -21,7 +20,6 @@ const SerieDetail = () => {
   let genres = []
   let genresList = []
   const [detail, setDetail] = useState([])
-  const [video, setVideo] = useState([])
   const [casts, setCasts] = useState([])
   const [similarSerie, setSimilarSerie] = useState([])
   const { id } = useParams()
@@ -29,7 +27,6 @@ const SerieDetail = () => {
   useEffect(() => {
     const fetchAPI = async () => {
       setDetail(await fetchSerieDetail(id))
-      setVideo(await fetchSerieVideos(id))
       setCasts(await fetchSerieCasts(id))
       setSimilarSerie(await fetchSimilarSerie(id))
     }
@@ -90,20 +87,20 @@ const SerieDetail = () => {
               style={{ height: '60vh', aspectRatio: '10/16' }} rounded />
           </Col>
           <Col className="text-start">
-            <h1>{detail.title} <strong className="text-muted fs-5">({detail.first_air_date})</strong></h1>
-            <h4>Overview: </h4>
-            <p>{detail.overview}</p>
+            <h1>{detail.name} <strong className="text-muted fs-5">({detail.first_air_date})</strong></h1>
+            <h4 className="d-lg-flex collapse">Overview: </h4>
+            <p className="d-lg-flex collapse">{detail.overview}</p>
           </Col>
           <Col className="text-end">
-            <h3>Rating: <strong className="fs-2 text-danger">{detail.vote_average}</strong></h3>
+            <h3 >Rating: <strong className="fs-2 text-danger">{detail.vote_average}</strong></h3>
             <VideoModal id={id} title={detail.title} color="muted" />
           </Col>
           <Col className="text-end justify-content-right align-self-center">
             <div className="btn-group-vertical collapse d-md-inline">
               <ChatButton />
-              <BookmarkButton />
-              <FavouriteButton type="tv" id={id}/>
-              <WatchListButton />
+              <ShareButton title={detail.name} />
+              <FavouriteButton type="tv" id={id} />
+              <WatchListButton type="movie" id={id} />
             </div>
           </Col>
           <Row className="py-2 text-start d-inline-block">

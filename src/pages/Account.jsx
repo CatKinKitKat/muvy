@@ -20,7 +20,7 @@ const Account = () => {
 
   return (
     <AccountBox id={details.id} name={details.name} username={details.username}
-    mature={details.mature} />
+    adult={details.include_adult} />
   )
 }
 

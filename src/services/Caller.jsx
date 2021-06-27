@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { FileEarmarkEaselFill } from 'react-bootstrap-icons'
 
 const apiKey = 'a376a8713895b520ccb34e514f0fbe51'
 
@@ -38,6 +39,86 @@ export const addToFavourites = async (type, id) => {
     media_type: type,
     media_id: id,
     favorite: true
+  }, {
+    params: {
+      api_key: apiKey,
+      session_id: localStorage.getItem('session_id')
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return data
+  })
+
+  return data
+
+}
+
+
+export const removeFromFavourites = async (type, id) => {
+
+  let data = []
+  const urlBuilder = accountUrl + "/" + await getAccId() + "/favorite"
+
+  const fuckOff = (yeet) => { // Dear god I am tired
+    if (yeet === "serie") {
+      return "tv"
+    }
+    return yeet
+  }
+
+  await axios.post(urlBuilder, {
+    media_type: fuckOff(type),
+    media_id: id,
+    favorite: false
+  }, {
+    params: {
+      api_key: apiKey,
+      session_id: localStorage.getItem('session_id')
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return false
+  })
+
+  return data.success
+}
+
+export const addToWatchList = async (type, id) => {
+
+  let data = []
+  const urlBuilder = accountUrl + "/" + await getAccId() + "/watchlist"
+
+  await axios.post(urlBuilder, {
+    media_type: type,
+    media_id: id,
+    watchlist: true
+  }, {
+    params: {
+      api_key: apiKey,
+      session_id: localStorage.getItem('session_id')
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return data
+  })
+
+  return data
+
+}
+
+
+export const removeFromWatchList = async (type, id) => {
+
+  let data = []
+  const urlBuilder = accountUrl + "/" + await getAccId() + "/watchlist"
+
+  await axios.post(urlBuilder, {
+    media_type: type,
+    media_id: id,
+    watchlist: false
   }, {
     params: {
       api_key: apiKey,
@@ -116,6 +197,68 @@ export const fetchFavouriteSeries = async (id) => {
   return modifiedData
 }
 
+
+export const fetchWatchListMovies = async (id) => {
+
+  let data = []
+  const posterUrl = 'https://image.tmdb.org/t/p/w500/'
+  const urlBuilder = accountUrl + "/" + id + "/watchlist/movies"
+
+  await axios.get(urlBuilder, {
+    params: {
+      api_key: apiKey,
+      session_id: localStorage.getItem('session_id')
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return data
+  })
+
+  const modifiedData = data.results.map((m) => ({
+    id: m.id,
+    year: m.release_date.substring(0, 4),
+    backPoster: posterUrl + m.backdrop_path,
+    popularity: m.popularity,
+    title: m.title,
+    poster: posterUrl + m.poster_path,
+    overview: m.overview,
+    rating: m.vote_average
+  }))
+
+  return modifiedData
+}
+
+export const fetchWatchListSeries = async (id) => {
+
+  let data = []
+  const posterUrl = 'https://image.tmdb.org/t/p/w500/'
+  const urlBuilder = accountUrl + "/" + id + "/watchlist/tv"
+
+  await axios.get(urlBuilder, {
+    params: {
+      api_key: apiKey,
+      session_id: localStorage.getItem('session_id')
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return data
+  })
+
+  const modifiedData = data.results.map((m) => ({
+    id: m.id,
+    year: m.first_air_date.substring(0, 4),
+    backPoster: posterUrl + m.backdrop_path,
+    popularity: m.popularity,
+    title: m.name,
+    poster: posterUrl + m.poster_path,
+    overview: m.overview,
+    rating: m.vote_average
+  }))
+
+  return modifiedData
+}
 
 
 export const getSessionId = () => {
@@ -270,6 +413,90 @@ export const fetchGenre = () => {
 
 export const fetchMovieByGenre = async () => {
 
+}
+
+export const fetchPerson = async (id) => {
+
+  let data = []
+  const imgUrl = 'https://image.tmdb.org/t/p/w500/'
+  const urlBuilder = peopleUrl + "/" + id
+
+  await axios.get(urlBuilder, {
+    params: {
+      api_key: apiKey,
+      language: "en_GB"
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return data
+  })
+
+  const gender = (gender) => {
+    switch (gender) {
+      case 0:
+        return "0"
+      case 1:
+        return "1"
+      case 2:
+        return "2"
+      case 3:
+        return "3"
+      default:
+        return "Invalid"
+    }
+  }
+
+  const modifiedData = [data].map((m) => ({
+    id: m.id,
+    birth: m.birthday,
+    death: m.deathday,
+    popularity: m.popularity,
+    name: m.name,
+    picture: imgUrl + m.profile_path,
+    bio: m.biography,
+    adult: m.adult,
+    gender: gender(m.gender)
+  }))
+
+  return modifiedData[0]
+}
+
+export const fetchPersonCredits = async (id) => {
+
+  let data = []
+
+  const posterUrl = 'https://image.tmdb.org/t/p/w500/'
+  const urlBuilder = peopleUrl + "/" + id + "/combined_credits"
+
+  await axios.get(urlBuilder, {
+    params: {
+      api_key: apiKey,
+      language: "en_GB"
+    }
+  }).then(response => {
+    data = response.data.cast
+  }).catch(_error => {
+    return data
+  })
+
+  const title = (title, name) => {
+    if (title !== null || title !== undefined) {
+      return title
+    } else if (name !== null || name !== undefined) {
+      return name
+    }
+  }
+  const modifiedData = data.map((m) => ({
+    id: m.id,
+    type: m.media_type,
+    character: m.character,
+    title: title(m.title, m.name),
+    poster: posterUrl + m.poster_path,
+    rating: m.vote_average
+  }))
+
+  return modifiedData
 }
 
 export const fetchPeople = async (type, page) => {
@@ -443,8 +670,8 @@ export const fetchMovieCasts = async (id) => {
 }
 
 export const fetchSerieCasts = async (id) => {
+
   const urlBuilder = serieUrl + '/' + id + castUrl
-  console.log(urlBuilder)
   let data = []
   await axios.get(urlBuilder, {
     params: {
@@ -484,7 +711,7 @@ export const fetchSimilarMovie = async (id) => {
     id: m.id,
     backPoster: posterUrl + m.backdrop_path,
     popularity: m.popularity,
-    title: m.name,
+    title: m.title,
     poster: posterUrl + m.poster_path,
     overview: m.overview,
     rating: m.vote_average

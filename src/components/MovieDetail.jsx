@@ -5,13 +5,12 @@ import ReactStars from 'react-rating-stars-component'
 import VideoModal from './VideoModal'
 import CastBox from './boxes/CastBox'
 import RecomendedMovieBox from './boxes/RecomendedMovieBox'
-import BookmarkButton from './buttons/BookmarkButton'
+import ShareButton from './buttons/ShareButton'
 import ChatButton from './buttons/ChatButton'
 import FavouriteButton from './buttons/FavouriteButton'
 import WatchListButton from './buttons/WatchListButton'
 import {
   fetchMovieDetail,
-  fetchMovieVideos,
   fetchMovieCasts,
   fetchSimilarMovie
 } from '../services/Caller'
@@ -20,7 +19,6 @@ const MovieDetail = () => {
   let genres = []
   let genresList = []
   const [detail, setDetail] = useState([])
-  const [video, setVideo] = useState([])
   const [casts, setCasts] = useState([])
   const [similarMovie, setSimilarMovie] = useState([])
   const { id } = useParams()
@@ -28,7 +26,6 @@ const MovieDetail = () => {
   useEffect(() => {
     const fetchAPI = async () => {
       setDetail(await fetchMovieDetail(id))
-      setVideo(await fetchMovieVideos(id))
       setCasts(await fetchMovieCasts(id))
       setSimilarMovie(await fetchSimilarMovie(id))
     }
@@ -75,7 +72,10 @@ const MovieDetail = () => {
     if (revenue === null || revenue === undefined) {
       return 'Very High'
     }
-    return revenue + "$"
+    return revenue.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    })
   }
 
   const posterGet = (poster) => {
@@ -96,9 +96,9 @@ const MovieDetail = () => {
               style={{ height: '60vh', aspectRatio: '10/16' }} rounded />
           </Col>
           <Col className="text-start">
-            <h1>{detail.title} <strong className="text-muted fs-5">({detail.release_date})</strong></h1>
-            <h4>Overview: </h4>
-            <p>{detail.overview}</p>
+            <h1 >{detail.title} <strong className="text-muted fs-5 d-md-flex collapse">({detail.release_date})</strong></h1>
+            <h4 className="d-md-flex collapse">Overview: </h4>
+            <p className="d-md-flex collapse">{detail.overview}</p>
           </Col>
           <Col className="text-end">
             <h3>Rating: <strong className="fs-2 text-danger">{detail.vote_average}</strong></h3>
@@ -107,9 +107,9 @@ const MovieDetail = () => {
           <Col className="text-end justify-content-right align-self-center">
             <div className="btn-group-vertical collapse d-md-inline">
               <ChatButton />
-              <BookmarkButton />
-              <FavouriteButton type="movie" id={id}/>
-              <WatchListButton />
+              <ShareButton title={detail.title} />
+              <FavouriteButton type="movie" id={id} />
+              <WatchListButton type="movie" id={id} />
             </div>
           </Col>
           <Row className="py-2 text-start d-inline-block">
