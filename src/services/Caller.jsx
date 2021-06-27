@@ -170,9 +170,16 @@ export const fetchFavouriteMovies = async (id) => {
     return data
   })
 
+  const getYear = (date) => {
+    if (date === null || date === undefined) {
+      return '2021'
+    }
+    return date.substring(0, 4)
+  }
+
   const modifiedData = data.results.map((m) => ({
     id: m.id,
-    year: m.release_date.substring(0, 4),
+    year: getYear(m.release_date),
     backPoster: posterUrl + m.backdrop_path,
     popularity: m.popularity,
     title: m.title,
@@ -201,9 +208,15 @@ export const fetchFavouriteSeries = async (id) => {
     return data
   })
 
+  const getYear = (date) => {
+    if (date === null || date === undefined) {
+      return '2021'
+    }
+    return date.substring(0, 4)
+  }
   const modifiedData = data.results.map((m) => ({
     id: m.id,
-    year: m.first_air_date.substring(0, 4),
+    year: getYear(m.first_air_date),
     backPoster: posterUrl + m.backdrop_path,
     popularity: m.popularity,
     title: m.name,
@@ -233,9 +246,15 @@ export const fetchWatchListMovies = async (id) => {
     return data
   })
 
+  const getYear = (date) => {
+    if (date === null || date === undefined) {
+      return '2021'
+    }
+    return date.substring(0, 4)
+  }
   const modifiedData = data.results.map((m) => ({
     id: m.id,
-    year: m.release_date.substring(0, 4),
+    year: getYear(m.release_date),
     backPoster: posterUrl + m.backdrop_path,
     popularity: m.popularity,
     title: m.title,
@@ -264,9 +283,15 @@ export const fetchWatchListSeries = async (id) => {
     return data
   })
 
+  const getYear = (date) => {
+    if (date === null || date === undefined) {
+      return '2021'
+    }
+    return date.substring(0, 4)
+  }
   const modifiedData = data.results.map((m) => ({
     id: m.id,
-    year: m.first_air_date.substring(0, 4),
+    year: getYear(m.first_air_date),
     backPoster: posterUrl + m.backdrop_path,
     popularity: m.popularity,
     title: m.name,
@@ -465,6 +490,13 @@ export const fetchPerson = async (id) => {
     }
   }
 
+  const overviewHandle = (overview) => {
+    if (overview.length >= 1500) {
+      return overview.substring(0, 1500) + '...'
+    }
+    return overview
+  }
+
   const modifiedData = [data].map((m) => ({
     id: m.id,
     birth: m.birthday,
@@ -472,7 +504,7 @@ export const fetchPerson = async (id) => {
     popularity: m.popularity,
     name: m.name,
     picture: imgUrl + m.profile_path,
-    bio: m.biography,
+    bio: overviewHandle(m.biography),
     adult: m.adult,
     gender: gender(m.gender)
   }))
@@ -596,9 +628,16 @@ export const fetchSeries = async (type, page) => {
   }).catch(_error => {
     return data
   })
+
+  const getYear = (date) => {
+    if (date === null || date === undefined) {
+      return '2021'
+    }
+    return date.substring(0, 4)
+  }
   const modifiedData = data.results.map((m) => ({
     id: m.id,
-    year: m.first_air_date.substring(0, 4),
+    year: getYear(m.first_air_date),
     backPoster: posterUrl + m.backdrop_path,
     popularity: m.popularity,
     title: m.name,
@@ -678,7 +717,7 @@ export const fetchMovieCasts = async (id) => {
     return data
   })
   const modifiedData = data.cast.map((c) => ({
-    id: c.cast_id,
+    id: c.id,
     character: c.character,
     name: c.name,
     img: 'https://image.tmdb.org/t/p/w500' + c.profile_path
@@ -777,6 +816,11 @@ export const fetchTrailer = async (id) => {
   }).catch(_error => {
     return data
   })
+
+  if (data.length === 0) {
+
+    return []
+  }
   const modifiedData = data.results.map((m) => ({
     type: m.type,
     key: m.key
@@ -787,4 +831,6 @@ export const fetchTrailer = async (id) => {
       return (video.key).toString()
     }
   }
+
+  return []
 }

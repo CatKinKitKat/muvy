@@ -34,6 +34,13 @@ const SerieDetail = () => {
     fetchAPI()
   }, [])
 
+  const overviewHandle = (overview) => {
+    if (overview.length >= 700) {
+      return overview.substring(0, 700) + '...'
+    }
+    return overview
+  }
+
   const rateSerie = async (newRating) => {
     newRating *= 2
     if (await rate(newRating, "tv", id)) {

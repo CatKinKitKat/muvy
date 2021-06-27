@@ -3,7 +3,7 @@ import { Image, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 const CastBox = (props) => {
-  const link = '/person/' + props.id.toString()
+  const link = '/person/' + props.id
   const nameHandle = (title) => {
     if (title.length >= 25) {
       return title.substring(0, 25) + '...'

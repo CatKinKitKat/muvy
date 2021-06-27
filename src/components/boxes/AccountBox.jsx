@@ -44,7 +44,7 @@ const AccountBox = (props) => {
   }
 
   return (
-    <Container fluid className="p-0 m-0">
+    <Container fluid className="p-0 m-0" style={{overflowY: "hidden"}}>
       <Col className="bg-dark">
         <Row className="p-5 pb-0">
           <Col>

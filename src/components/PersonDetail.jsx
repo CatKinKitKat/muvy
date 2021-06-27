@@ -69,9 +69,9 @@ const PersonDetail = () => {
         </Row>
       </Col>
       <Col>
-        <Row className="p-5">
+        <Row className="p-5" >
           <h1>Known for: </h1>
-          <CardDeck className="d-inline-flex justify-content-start">
+          <CardDeck className="d-inline-flex justify-content-start" style={{overflowY: "scroll"}}>
             {list}
           </CardDeck>
         </Row>
