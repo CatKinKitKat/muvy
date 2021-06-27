@@ -30,6 +30,27 @@ export const getAccId = async () => {
   }
 }
 
+export const rate = async (value, type, id) => {
+
+  let data = []
+  const urlBuilder = url + "/" + type + "/" + id + "/rating"
+
+  await axios.post(urlBuilder, {
+    value: value
+  }, {
+    params: {
+      api_key: apiKey,
+      session_id: localStorage.getItem('session_id')
+    }
+  }).then(response => {
+    data = response.data
+  }).catch(_error => {
+    return false
+  })
+
+  return data.success
+}
+
 export const addToFavourites = async (type, id) => {
 
   let data = []
@@ -47,11 +68,10 @@ export const addToFavourites = async (type, id) => {
   }).then(response => {
     data = response.data
   }).catch(_error => {
-    return data
+    return false
   })
 
-  return data
-
+  return data.success
 }
 
 
@@ -102,11 +122,10 @@ export const addToWatchList = async (type, id) => {
   }).then(response => {
     data = response.data
   }).catch(_error => {
-    return data
+    return false
   })
 
-  return data
-
+  return data.success
 }
 
 
@@ -127,11 +146,10 @@ export const removeFromWatchList = async (type, id) => {
   }).then(response => {
     data = response.data
   }).catch(_error => {
-    return data
+    return false
   })
 
-  return data
-
+  return data.success
 }
 
 

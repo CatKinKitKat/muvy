@@ -11,6 +11,7 @@ import ChatButton from './buttons/ChatButton'
 import FavouriteButton from './buttons/FavouriteButton'
 import WatchListButton from './buttons/WatchListButton'
 import {
+  rate,
   fetchSerieDetail,
   fetchSerieCasts,
   fetchSimilarSerie
@@ -32,6 +33,13 @@ const SerieDetail = () => {
     }
     fetchAPI()
   }, [])
+
+  const rateSerie = async (newRating) => {
+    newRating *= 2
+    if (await rate(newRating, "tv", id)) {
+      alert("Rated: " + newRating + "/10")
+    }
+  }
 
   genres = detail.genres
 
@@ -104,6 +112,15 @@ const SerieDetail = () => {
             </div>
           </Col>
           <Row className="py-2 text-start d-inline-block">
+            <h5 className="p-4 collapse d-md-flex">
+              Rate:
+              <ReactStars
+                count={5}
+                onChange={rateSerie}
+                isHalf={true}
+                size={42}
+              />
+            </h5>
             <h3 className="px-4 collapse d-md-flex">Genres: </h3>
             {genresList}
           </Row>

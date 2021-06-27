@@ -10,6 +10,7 @@ import ChatButton from './buttons/ChatButton'
 import FavouriteButton from './buttons/FavouriteButton'
 import WatchListButton from './buttons/WatchListButton'
 import {
+  rate,
   fetchMovieDetail,
   fetchMovieCasts,
   fetchSimilarMovie
@@ -31,6 +32,13 @@ const MovieDetail = () => {
     }
     fetchAPI()
   }, [])
+
+  const rateMovie = async (newRating) => {
+    newRating *= 2
+    if (await rate(newRating, "movie", id)) {
+      alert("Rated: " + newRating + "/10")
+    }
+  }
 
   genres = detail.genres
 
@@ -102,6 +110,7 @@ const MovieDetail = () => {
           </Col>
           <Col className="text-end">
             <h3>Rating: <strong className="fs-2 text-danger">{detail.vote_average}</strong></h3>
+
             <VideoModal id={id} title={detail.title} color="muted" />
           </Col>
           <Col className="text-end justify-content-right align-self-center">
@@ -113,6 +122,15 @@ const MovieDetail = () => {
             </div>
           </Col>
           <Row className="py-2 text-start d-inline-block">
+            <h5 className="p-4 collapse d-md-flex">
+              Rate:
+              <ReactStars
+                count={5}
+                onChange={rateMovie}
+                isHalf={true}
+                size={42}
+              />
+            </h5>
             <h3 className="px-4 collapse d-md-flex">Genres: </h3>
             {genresList}
           </Row>
