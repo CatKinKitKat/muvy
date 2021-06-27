@@ -5,17 +5,16 @@ import { HeartFill } from 'react-bootstrap-icons'
 import { getAccId, addToFavourites } from '../../services/Caller'
 
 const FavouriteButton = (props) => {
-
   const setFav = (type, id) => {
     if (getAccId() !== null) {
-      alert("Added to favourites\nTo remove go to your account page")
+      alert('Added to favourites\nTo remove go to your account page')
       addToFavourites(type, id)
     }
   }
 
   return (
     <Button variant="muted" className="fs-1 text-primary" onClick={() => { setFav(props.type, props.id) }}>
-      <HeartFill style={{ fontSize: "calc(100% + 1vw + 1vh)" }} />
+      <HeartFill style={{ fontSize: 'calc(100% + 1vw + 1vh)' }} />
     </Button>
   )
 }

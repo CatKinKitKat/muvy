@@ -5,7 +5,6 @@ import ReactPlayer from 'react-player'
 import { fetchTrailer } from '../services/Caller'
 
 export const VideoModal = (props) => {
-  
   const [isOpen, setIsOpen] = useState(false)
   const [key, setVideo] = useState([])
 

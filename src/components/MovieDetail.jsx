@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Image, Button, Container, Card, Col, Row } from 'react-bootstrap'
+import { Image, Button, Col, Row } from 'react-bootstrap'
 import ReactStars from 'react-rating-stars-component'
 import VideoModal from './VideoModal'
 import CastBox from './boxes/CastBox'
@@ -35,8 +35,8 @@ const MovieDetail = () => {
 
   const rateMovie = async (newRating) => {
     newRating *= 2
-    if (await rate(newRating, "movie", id)) {
-      alert("Rated: " + newRating + "/10")
+    if (await rate(newRating, 'movie', id)) {
+      alert('Rated: ' + newRating + '/10')
     }
   }
 
@@ -82,7 +82,7 @@ const MovieDetail = () => {
     }
     return revenue.toLocaleString('en-US', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'USD'
     })
   }
 

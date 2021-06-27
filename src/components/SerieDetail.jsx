@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Image, Button, Container, Card, Col, Row } from 'react-bootstrap'
-import { Star, Bookmark } from 'react-bootstrap-icons'
+import { Image, Button, Col, Row } from 'react-bootstrap'
 import ReactStars from 'react-rating-stars-component'
 import VideoModal from './VideoModal'
 import CastBox from './boxes/CastBox'
@@ -34,17 +33,10 @@ const SerieDetail = () => {
     fetchAPI()
   }, [])
 
-  const overviewHandle = (overview) => {
-    if (overview.length >= 700) {
-      return overview.substring(0, 700) + '...'
-    }
-    return overview
-  }
-
   const rateSerie = async (newRating) => {
     newRating *= 2
-    if (await rate(newRating, "tv", id)) {
-      alert("Rated: " + newRating + "/10")
+    if (await rate(newRating, 'tv', id)) {
+      alert('Rated: ' + newRating + '/10')
     }
   }
 

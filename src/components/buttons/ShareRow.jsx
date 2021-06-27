@@ -48,7 +48,6 @@ const ShareRow = (props) => {
           <TwitterIcon size={64} round />
         </TwitterShareButton>
 
-
       </Col>
 
       <Col >
@@ -59,7 +58,6 @@ const ShareRow = (props) => {
         >
           <TelegramIcon size={64} round />
         </TelegramShareButton>
-
 
       </Col>
 
@@ -72,7 +70,6 @@ const ShareRow = (props) => {
         >
           <WhatsappIcon size={64} round />
         </WhatsappShareButton>
-
 
       </Col>
 

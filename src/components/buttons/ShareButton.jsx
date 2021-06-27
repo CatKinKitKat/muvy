@@ -1,17 +1,16 @@
-import { React, useEffect, useState } from 'react'
+import { React, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Modal } from 'react-bootstrap'
 import { ShareFill } from 'react-bootstrap-icons'
 import ShareRow from './ShareRow'
 
 const ShareButton = (props) => {
-
   const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
       <Button variant="muted" className="fs-1 text-primary" onClick={() => setIsOpen(true)}>
-        <ShareFill style={{ fontSize: "calc(100% + 1vw + 1vh)" }} />
+        <ShareFill style={{ fontSize: 'calc(100% + 1vw + 1vh)' }} />
       </Button>
       <Modal
         size="lg"

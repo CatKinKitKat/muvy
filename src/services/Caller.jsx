@@ -14,7 +14,7 @@ const movieUrl = `${url}/movie` // GET
 const serieUrl = `${url}/tv` // GET
 const castUrl = '/credits' // GET
 const similarUrl = '/similar' // GET
-const searchUrl = '/search/multi' //GET
+const searchUrl = '/search/multi' // GET
 const trendingPeopleUrl = `${url}/trending/person/week` // GET
 const trendingMoviesUrl = `${url}/trending/movie/week` // GET
 const trendingSeriesUrl = `${url}/trending/tv/week` // GET
@@ -23,7 +23,7 @@ const trendingSeriesUrl = `${url}/trending/tv/week` // GET
 
 export const getAccId = async () => {
   try {
-    let data = await getAccountDetails()
+    const data = await getAccountDetails()
     return data.id
   } catch (_error) {
     return null
@@ -31,9 +31,8 @@ export const getAccId = async () => {
 }
 
 export const rate = async (value, type, id) => {
-
   let data = []
-  const urlBuilder = url + "/" + type + "/" + id + "/rating"
+  const urlBuilder = url + '/' + type + '/' + id + '/rating'
 
   await axios.post(urlBuilder, {
     value: value
@@ -52,9 +51,8 @@ export const rate = async (value, type, id) => {
 }
 
 export const addToFavourites = async (type, id) => {
-
   let data = []
-  const urlBuilder = accountUrl + "/" + await getAccId() + "/favorite"
+  const urlBuilder = accountUrl + '/' + await getAccId() + '/favorite'
 
   await axios.post(urlBuilder, {
     media_type: type,
@@ -74,15 +72,13 @@ export const addToFavourites = async (type, id) => {
   return data.success
 }
 
-
 export const removeFromFavourites = async (type, id) => {
-
   let data = []
-  const urlBuilder = accountUrl + "/" + await getAccId() + "/favorite"
+  const urlBuilder = accountUrl + '/' + await getAccId() + '/favorite'
 
   const fuckOff = (yeet) => { // Dear god I am tired
-    if (yeet === "serie") {
-      return "tv"
+    if (yeet === 'serie') {
+      return 'tv'
     }
     return yeet
   }
@@ -106,9 +102,8 @@ export const removeFromFavourites = async (type, id) => {
 }
 
 export const addToWatchList = async (type, id) => {
-
   let data = []
-  const urlBuilder = accountUrl + "/" + await getAccId() + "/watchlist"
+  const urlBuilder = accountUrl + '/' + await getAccId() + '/watchlist'
 
   await axios.post(urlBuilder, {
     media_type: type,
@@ -128,11 +123,9 @@ export const addToWatchList = async (type, id) => {
   return data.success
 }
 
-
 export const removeFromWatchList = async (type, id) => {
-
   let data = []
-  const urlBuilder = accountUrl + "/" + await getAccId() + "/watchlist"
+  const urlBuilder = accountUrl + '/' + await getAccId() + '/watchlist'
 
   await axios.post(urlBuilder, {
     media_type: type,
@@ -152,12 +145,10 @@ export const removeFromWatchList = async (type, id) => {
   return data.success
 }
 
-
 export const fetchFavouriteMovies = async (id) => {
-
   let data = []
   const posterUrl = 'https://image.tmdb.org/t/p/w500/'
-  const urlBuilder = accountUrl + "/" + id + "/favorite/movies"
+  const urlBuilder = accountUrl + '/' + id + '/favorite/movies'
 
   await axios.get(urlBuilder, {
     params: {
@@ -193,10 +184,9 @@ export const fetchFavouriteMovies = async (id) => {
 }
 
 export const fetchFavouriteSeries = async (id) => {
-
   let data = []
   const posterUrl = 'https://image.tmdb.org/t/p/w500/'
-  const urlBuilder = accountUrl + "/" + id + "/favorite/tv"
+  const urlBuilder = accountUrl + '/' + id + '/favorite/tv'
 
   await axios.get(urlBuilder, {
     params: {
@@ -231,12 +221,10 @@ export const fetchFavouriteSeries = async (id) => {
   return modifiedData
 }
 
-
 export const fetchWatchListMovies = async (id) => {
-
   let data = []
   const posterUrl = 'https://image.tmdb.org/t/p/w500/'
-  const urlBuilder = accountUrl + "/" + id + "/watchlist/movies"
+  const urlBuilder = accountUrl + '/' + id + '/watchlist/movies'
 
   await axios.get(urlBuilder, {
     params: {
@@ -272,10 +260,9 @@ export const fetchWatchListMovies = async (id) => {
 }
 
 export const fetchWatchListSeries = async (id) => {
-
   let data = []
   const posterUrl = 'https://image.tmdb.org/t/p/w500/'
-  const urlBuilder = accountUrl + "/" + id + "/watchlist/tv"
+  const urlBuilder = accountUrl + '/' + id + '/watchlist/tv'
 
   await axios.get(urlBuilder, {
     params: {
@@ -309,7 +296,6 @@ export const fetchWatchListSeries = async (id) => {
 
   return modifiedData
 }
-
 
 export const getSessionId = () => {
   return localStorage.getItem('session_id')
@@ -349,7 +335,6 @@ const getToken = async () => {
 }
 
 const validateToken = async (username, password) => {
-
   let data = []
   await getToken()
   await axios.post(loginUrl, {
@@ -374,17 +359,16 @@ const validateToken = async (username, password) => {
 }
 
 export const login = async (username, password) => {
-
   let data = []
-  let bool = await validateToken(username, password)
+  const bool = await validateToken(username, password)
 
-  if (bool === "false") {
+  if (bool === 'false') {
     localStorage.removeItem('session_id')
     localStorage.removeItem('request_token')
     localStorage.removeItem('token_validated')
     return false
   }
-  
+
   await axios.post(sessionUrl, {
     request_token: localStorage.getItem('request_token')
   }, {
@@ -428,12 +412,10 @@ export const logout = async () => {
   })
 }
 
-
 export const fetchSearch = async (searchValue, page) => {
-
   const posterUrl = 'https://image.tmdb.org/t/p/w500/'
   let data = []
-  let finalUrl = url + searchUrl
+  const finalUrl = url + searchUrl
 
   if (page === '') {
     page = 1
@@ -534,15 +516,14 @@ export const fetchMovieByGenre = async () => {
 }
 
 export const fetchPerson = async (id) => {
-
   let data = []
   const imgUrl = 'https://image.tmdb.org/t/p/w500/'
-  const urlBuilder = peopleUrl + "/" + id
+  const urlBuilder = peopleUrl + '/' + id
 
   await axios.get(urlBuilder, {
     params: {
       api_key: apiKey,
-      language: "en_GB"
+      language: 'en_GB'
     }
   }).then(response => {
     data = response.data
@@ -553,15 +534,15 @@ export const fetchPerson = async (id) => {
   const gender = (gender) => {
     switch (gender) {
       case 0:
-        return "0"
+        return '0'
       case 1:
-        return "1"
+        return '1'
       case 2:
-        return "2"
+        return '2'
       case 3:
-        return "3"
+        return '3'
       default:
-        return "Invalid"
+        return 'Invalid'
     }
   }
 
@@ -588,16 +569,15 @@ export const fetchPerson = async (id) => {
 }
 
 export const fetchPersonCredits = async (id) => {
-
   let data = []
 
   const posterUrl = 'https://image.tmdb.org/t/p/w500/'
-  const urlBuilder = peopleUrl + "/" + id + "/combined_credits"
+  const urlBuilder = peopleUrl + '/' + id + '/combined_credits'
 
   await axios.get(urlBuilder, {
     params: {
       api_key: apiKey,
-      language: "en_GB"
+      language: 'en_GB'
     }
   }).then(response => {
     data = response.data.cast
@@ -802,7 +782,6 @@ export const fetchMovieCasts = async (id) => {
 }
 
 export const fetchSerieCasts = async (id) => {
-
   const urlBuilder = serieUrl + '/' + id + castUrl
   let data = []
   await axios.get(urlBuilder, {
@@ -893,7 +872,6 @@ export const fetchTrailer = async (id) => {
   })
 
   if (data.length === 0) {
-
     return []
   }
   const modifiedData = data.results.map((m) => ({

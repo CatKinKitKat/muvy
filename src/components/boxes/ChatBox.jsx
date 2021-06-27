@@ -3,8 +3,7 @@ import DiscussionBoard from 'react-discussion-board'
 import 'react-discussion-board/dist/index.css'
 
 const ChatBox = () => {
-
-  let allPosts = [
+  const allPosts = [
     {
       profileImage:
         'https://picsum.photos/200',

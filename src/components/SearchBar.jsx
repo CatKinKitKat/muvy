@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import SearchBox from './boxes/SearchBox';
+import SearchBox from './boxes/SearchBox'
 import { Col, Row, Container } from 'react-bootstrap'
-import { fetchSearch } from "../services/Caller";
+import { fetchSearch } from '../services/Caller'
 
 const SearchBar = () => {
   const [searchValue, setSearchValue] = useState('')

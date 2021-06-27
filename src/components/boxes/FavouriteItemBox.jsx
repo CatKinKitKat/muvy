@@ -5,8 +5,6 @@ import { Link, useHistory } from 'react-router-dom'
 import { removeFromFavourites, removeFromWatchList } from '../../services/Caller'
 
 const FavouriteItemBox = (props) => {
-
-  const history = useHistory()
   const link = '/' + props.type + '/' + props.id.toString()
   const nameHandle = (title) => {
     if (title.length >= 15) {
@@ -16,9 +14,9 @@ const FavouriteItemBox = (props) => {
   }
 
   const unsetFav = async (type, id, list) => {
-    if (list === "favourites") {
+    if (list === 'favourites') {
       await removeFromFavourites(type, id)
-    } else if (list === "watchlist") {
+    } else if (list === 'watchlist') {
       await removeFromWatchList(type, id)
     }
     location.reload()
@@ -28,7 +26,7 @@ const FavouriteItemBox = (props) => {
     <div className="d-flex flex-column">
       <Card style={{ width: '12.5rem' }}>
         <Link to={link}>
-          <Card.Img variant="top" src={props.imgUrl} style={{ objectFit: "cover", aspectRatio: '1/1' }} />
+          <Card.Img variant="top" src={props.imgUrl} style={{ objectFit: 'cover', aspectRatio: '1/1' }} />
           <Card.ImgOverlay className="text-center" style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}>
             <Card.Text className="text-secondary">
               ({props.year})

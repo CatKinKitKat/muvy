@@ -13,7 +13,7 @@ const FavouriteItemBoxRow = (props) => {
   })
 
   return (
-    <Container className="p-4" style={{ overflowY: "scroll" }}>
+    <Container className="p-4" style={{ overflowY: 'scroll' }}>
       <CardDeck className="d-inline-flex justify-content-start">
         {list}
       </CardDeck>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import FavouriteItemBoxRow from "../FavouriteItemBoxRow";
+import FavouriteItemBoxRow from '../FavouriteItemBoxRow'
 import { Container, Row, Col, Image, Button } from 'react-bootstrap'
 import {
   fetchFavouriteMovies,
@@ -10,7 +10,6 @@ import {
 } from '../../services/Caller'
 
 const AccountBox = (props) => {
-
   const [favouriteMovies, setFavouriteMovies] = useState([])
   const [favouriteSeries, setFavouriteSeries] = useState([])
   const [watchListMovies, setWatchListMovies] = useState([])
@@ -24,8 +23,6 @@ const AccountBox = (props) => {
     }
     fetchAPI()
   }, [])
-
-
 
   const imgLink = (hash) => {
     return 'https://www.gravatar.com/avatar/' + hash
@@ -44,7 +41,7 @@ const AccountBox = (props) => {
   }
 
   return (
-    <Container fluid className="p-0 m-0" style={{overflowY: "hidden"}}>
+    <Container fluid className="p-0 m-0" style={{ overflowY: 'hidden' }}>
       <Col className="bg-dark">
         <Row className="p-5 pb-0">
           <Col>

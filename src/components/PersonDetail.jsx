@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { Image, Button, Container, CardDeck, Col, Row } from 'react-bootstrap'
+import { useParams } from 'react-router-dom'
+import { Image, Container, CardDeck, Col, Row } from 'react-bootstrap'
 import { fetchPerson, fetchPersonCredits } from '../services/Caller'
 import CreditBox from './boxes/CreditBox'
 
 const PersonDetail = () => {
-
   const [detail, setDetail] = useState([])
   const [credits, setCredits] = useState([])
   const { id } = useParams()
@@ -35,14 +34,13 @@ const PersonDetail = () => {
     return ''
   }
 
-  const list = credits.slice(0,30).map((item, index) => {
+  const list = credits.slice(0, 30).map((item, index) => {
     return (
       <Container className="d-flex p-0 pe-3 pb-1" key={index}>
         <CreditBox title={item.title} character={item.character} imgUrl={item.poster} id={item.id} type={item.type}/>
       </Container>
     )
   })
-
 
   return (
     <>
@@ -71,7 +69,7 @@ const PersonDetail = () => {
       <Col>
         <Row className="p-5" >
           <h1>Known for: </h1>
-          <CardDeck className="d-inline-flex justify-content-start" style={{overflowY: "scroll"}}>
+          <CardDeck className="d-inline-flex justify-content-start" style={{ overflowY: 'scroll' }}>
             {list}
           </CardDeck>
         </Row>

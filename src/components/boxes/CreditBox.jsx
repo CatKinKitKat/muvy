@@ -6,11 +6,10 @@ import { Link } from 'react-router-dom'
 const CreditBox = (props) => {
   const link = '/' + props.type + '/' + props.id.toString()
 
-
   return (
     <Card style={{ width: '12.5rem' }} variant="outline">
-      <Link to={link} style={{ textDecoration: "none" }}>
-        <Card.Img variant="top" src={props.imgUrl} style={{ objectFit: "cover", aspectRatio: '1/1' }} />
+      <Link to={link} style={{ textDecoration: 'none' }}>
+        <Card.Img variant="top" src={props.imgUrl} style={{ objectFit: 'cover', aspectRatio: '1/1' }} />
         <Card.Title className="text-primary text-center fs-4">
           <strong className="text-muted text-center fs-5">As<br /></strong>
           {props.character}

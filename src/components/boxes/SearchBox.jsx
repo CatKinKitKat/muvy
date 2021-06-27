@@ -4,7 +4,6 @@ import { Image, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 const SearchBox = (props) => {
-
   const nameHandle = (title) => {
     if (title.length >= 25) {
       return title.substring(0, 25) + '...'
@@ -13,9 +12,8 @@ const SearchBox = (props) => {
   }
 
   const pleaseKillMe = (type) => {
-
-    if (type === "tv") {
-      return "serie"
+    if (type === 'tv') {
+      return 'serie'
     }
     return type
   }
@@ -23,8 +21,7 @@ const SearchBox = (props) => {
   const link = '/' + pleaseKillMe(props.type) + '/' + props.id.toString()
 
   const buttonByType = (type) => {
-
-    if (type === "movie" || type === "serie") {
+    if (type === 'movie' || type === 'serie') {
       return (
         < Button variant="outline" href={link} >
           <p className="fs-5 text-primary p-0">{nameHandle(props.title)} ({props.year})</p>
@@ -32,7 +29,7 @@ const SearchBox = (props) => {
           </p>
         </Button >
       )
-    } else if (type === "person") {
+    } else if (type === 'person') {
       return (
         <Button variant="outline" href={link}>
           <p className="fs-5 text-primary p-0">{nameHandle(props.title)}</p>

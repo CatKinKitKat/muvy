@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom'
 import { getAccountDetails } from '../services/Caller'
 
 const Account = () => {
-  
   const history = useHistory()
   const [details, setDetails] = useState([])
 
