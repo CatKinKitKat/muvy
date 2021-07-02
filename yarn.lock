@@ -9463,10 +9463,10 @@ react-quill@^1.3.5:
     quill "^1.3.7"
     react-dom-factories "^1.0.0"
 
-react-rating-stars-component@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-rating-stars-component/-/react-rating-stars-component-2.2.0.tgz#e947c6a1f59278e6fea1098453f43cb15d077c14"
-  integrity sha512-A3lgLxumfFQQicKQmxacZ91fq/zRaVWlCPnVodJmJV6obvod4/yCotetN9WuyBiUfnKsEFDBo/8B85ocwmL7ng==
+react-rating-stars-component@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/react-rating-stars-component/-/react-rating-stars-component-2.2.3.tgz#3a3afff6be52f813a04647d700d5d6840e8fdc45"
+  integrity sha512-cnvwJj7TvH2RDGUK53g+C25DHptfYGni7buwM1CNd+QjpestK6DMjP276jtEANDJPT8BVF+JB6mGxhqp2O6t5g==
 
 react-refresh@^0.8.3:
   version "0.8.3"
