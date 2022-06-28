@@ -1,0 +1,11 @@
+= Muvy
+
+Project for TWAM (Web technologies and mobile enviroments), a course in my Computer Science Degree.
+
+This website is active at my https://muvy.catkinkitkat.duckdns.org/[raspberry pi's nginx instance^].
+
+== Description
+
+This is a plain and simple React Single page dynamic webapp, which uses a Bootstrap theme (Lux) as the CSS framwork and component library.
+
+This is another frontend for the TMDb API, from which you can do (almost) everything the API provides, from accounts, searching, trailers, favourites, watchlists... list goes on and on.
